@@ -2,12 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import SignInSide from './signin' ;
+import SignUpSide from './signup';
 import reportWebVitals from './reportWebVitals';
-
+import OrderTracking from'./customer/OrderTracking';
+import SubmitOrderForm from './customer/home-customer';
+import ProfileSettings from './customer/profil';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+  <SignInSide/>
   </React.StrictMode>
 );
 
