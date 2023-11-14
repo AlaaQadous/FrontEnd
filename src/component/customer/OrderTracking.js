@@ -12,7 +12,7 @@ const OrderTracking = () => {
       Date: '12/2/2025',
       steps: ['Order confirmed', 'Details', 'Ready for pickup'],
       product: {
-        details: 'تفاصيل المنتج هنا',
+        details: 'fghjk,mnb',
         image: '/path/to/product-image.jpg',
       },
       recommendation: 'توصية: يمكنك إضافة منتج إضافي لتحسين تجربتك',
@@ -23,7 +23,7 @@ const OrderTracking = () => {
       Date: '12/2/2025',
       steps: ['Order confirmed', 'Details', 'Ready for pickup'],
       product: {
-        details: 'تفاصيل المنتج هنا',
+        details: 'dfghj,mnbfvdc',
         image: '/path/to/product-image.jpg',
       },
       recommendation: 'توصية: يمكنك إضافة منتج إضافي لتحسين تجربتك',
@@ -34,7 +34,7 @@ const OrderTracking = () => {
       Date: '12/2/2025',
       steps: ['Order confirmed', 'Details', 'Ready for pickup'],
       product: {
-        details: 'تفاصيل المنتج هنا',
+        details: 'fghj,m njhmn',
         image: '/path/to/product-image.jpg',
       },
       recommendation: 'توصية: يمكنك إضافة منتج إضافي لتحسين تجربتك',
@@ -45,7 +45,7 @@ const OrderTracking = () => {
       Date: '12/2/2025',
       steps: ['Order confirmed', 'Details', 'Ready for pickup'],
       product: {
-        details: 'تفاصيل المنتج هنا',
+        details: 'dfghjkm',
         image: '/path/to/product-image.jpg',
       },
       recommendation: 'توصية: يمكنك إضافة منتج إضافي لتحسين تجربتك',
@@ -86,7 +86,7 @@ const OrderTracking = () => {
   });
 
   return (
-    <div className="container" style={{ paddingLeft: '140px', paddingTop: '20px' }}>
+    <div className="container" style={{ paddingTop: '100px' }}>
       {updatedOrders.map((singleOrder, index) => (
         <article key={index} className="card" style={{ marginBottom: '40px' }}>
           <header className="card-header"> My Orders / Tracking </header>

@@ -19,9 +19,9 @@ const SubmitOrderForm = () => {
     });
   };
   return (
-    <div className="container" style={{ paddingTop: '50px' }}>
+    <div className="container">
     <div className="row">
-      <div className="col-md-6" style={{ paddingTop: '50px' }}>
+      <div className="col-md-6" style={{ paddingTop: '100px' }}>
         <div className="card mx-auto">
           <div className="card-body">
             <h4 className="card-title" style={{ textAlign: 'center', marginBottom: '20px', color: 'rgb(229, 130, 178)' }}>Submit Order</h4>
@@ -49,7 +49,7 @@ const SubmitOrderForm = () => {
             </div>
           </div>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-6"style={{ paddingTop: '100px' }}>
         <img src={image} alt="Selected" className="img-fluid" style={{ width: '100%', height: '100%' }} />
       </div>
       </div>

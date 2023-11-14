@@ -16,56 +16,59 @@ const ProfileSettings = () => {
     lastName: '',
     email: '',
     password: '',
-    newPassword: '', 
+    newPassword: '',
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfile((prevProfile) => ({ ...prevProfile, [name]: value }));
   };
-  
+
   const handleSubmit = (event) => {
-  event.preventDefault();
+    event.preventDefault();
 
-  const formData = new FormData();
-  formData.append("email", profile.email);
-  formData.append("password", profile.password);
-  formData.append("newPassword", profile.newPassword);
-  formData.append("firstName", profile.firstName);
-  formData.append("lastName", profile.lastName);
+    const formData = new FormData();
+    formData.append("email", profile.email);
+    formData.append("password", profile.password);
+    formData.append("newPassword", profile.newPassword);
+    formData.append("firstName", profile.firstName);
+    formData.append("lastName", profile.lastName);
 
-  if (!profile.email || !profile.password || !profile.firstName || !profile.lastName) {
-    console.log("Please fill in all fields");
-    return;
-  }
+    if (!profile.email || !profile.password || !profile.firstName || !profile.lastName) {
+      console.log("Please fill in all fields");
+      return;
+    }
 
-  // Password validation
-  if (profile.newPassword.length < 6 || !/\d/.test(profile.newPassword) || !/[a-zA-Z]/.test(profile.newPassword)) {
-    console.log("Password must be at least 6 characters long and contain both letters and numbers");
-    return;
-  }
+    // Password validation
+    if (profile.newPassword.length < 6 || !/\d/.test(profile.newPassword) || !/[a-zA-Z]/.test(profile.newPassword)) {
+      console.log("Password must be at least 6 characters long and contain both letters and numbers");
+      return;
+    }
 
-  console.log({
-    firstName: profile.firstName,
-    lastName: profile.lastName,
-    email: profile.email,
-    password: profile.password,
-    newPassword: profile.newPassword,
-  });
-};
-
-  
+    console.log({
+      firstName: profile.firstName,
+      lastName: profile.lastName,
+      email: profile.email,
+      password: profile.password,
+      newPassword: profile.newPassword,
+    });
+  };
   return (
     <Container component="div" maxWidth="lg" className="rounded bg-white mt-5 mb-5">
-      <Grid container>
+      <Grid container style={{ paddingTop: '90px' }}>
         <Grid item xs={12} md={3} className="border-right">
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" p={3} py={5}>
             <img className="rounded-circle mt-5" width="150px" src={info.image} alt="Profile" />
             <div className="mb-3">
-                  <label htmlFor="formFile" className="form-label">Select Image</label>
-                  <input className="form-control" type="file" id="formFile"  />
-                </div>
+              <label htmlFor="formFile" className="btn btn-primary mt-2">
+                Upload Profile Picture
+              </label>
+              <input type="file" className="form-control" id="formFile" style={{ display: 'none' }} />
+            </div>
           </Box>
+
+
+
         </Grid>
         <Grid item xs={12} md={5} className="border-right">
           <Box p={3} py={5}>
@@ -79,7 +82,7 @@ const ProfileSettings = () => {
                   label="First Name"
                   variant="outlined"
                   placeholder={info.firstName}
-                  
+
                   name="firstName"
                   onChange={handleInputChange}
                 />
@@ -96,14 +99,14 @@ const ProfileSettings = () => {
               </Grid>
               <Grid item xs={12} md={12}>
 
-              <TextField
-                fullWidth
-                label="Email" 
-                variant="outlined"
-                placeholder="Email"
-                name="email"
-                onChange={handleInputChange}
-              />
+                <TextField
+                  fullWidth
+                  label="Email"
+                  variant="outlined"
+                  placeholder="Email"
+                  name="email"
+                  onChange={handleInputChange}
+                />
               </Grid>
 
               <Grid item xs={12} md={12}>
