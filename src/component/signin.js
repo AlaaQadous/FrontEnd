@@ -1,16 +1,13 @@
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+import { Link } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 import image from './customer/image/12.png';
-import SignUpSide from './signup';
 
 export default function SignInSide() {
   const handleSubmit = (event) => {
@@ -28,40 +25,40 @@ export default function SignInSide() {
       password,
     });
   };
- 
+
   return (
     <Container component="main" maxWidth="false"
     >
       <Box
-      sx={{
-        minHeight: "100vh",
-        minWidth:"100vh",
-        backgroundImage: `url(${image})`,
-        backgroundSize: "cover",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+        sx={{
+          minHeight: "100vh",
+          minWidth: "100vh",
+          backgroundImage: `url(${image})`,
+          backgroundSize: "cover",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-end", // Align to the right
+          justifyContent: "center",
+        }}
       >
         <Grid container >
-          <CssBaseline /> 
+          <CssBaseline />
           <Grid
-           item
-           xs={12}
-           sm={8}
-           md={5}
-           component={Paper}
-           elevation={6}
-           square
-           sx={{
-             display: "flex",
-             flexDirection: "column",
-             alignItems: "center", // Center horizontally
-             justifyContent: "center", // Center vertically
-             my: 8,
-             mx: "auto",
-             backgroundColor: "rgba(255, 255, 255, 0.5)", // Adjust background color and alpha value
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              my: 8,
+              mx: "auto",
+              backgroundColor: "rgba(255, 255, 255, 0.5)", // Adjust background color and alpha value
 
             }}
           >
@@ -72,21 +69,20 @@ export default function SignInSide() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-              
-                
               }}
             >
               <Typography component="h1" variant="h5"
-                         >
+              >
                 Sign in
               </Typography>
               <Box
                 component="form"
                 noValidate
                 onSubmit={handleSubmit}
-                sx={{ mt: 1 
+                sx={{
+                  mt: 1
 
-                 }}
+                }}
               >
                 <TextField
                   margin="normal"
@@ -108,27 +104,35 @@ export default function SignInSide() {
                   id="password"
                   autoComplete="current-password"
                 />
-                <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
-                  label="Remember me"
-                />
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+
+                <Link
+                  href="/"
+                  variant="body2"
+                  sx={{
+                    display: 'block',
+                    width: '100%',
+                    textAlign: 'center',
+                    backgroundColor: 'blue', // Set your desired background color
+                    color: 'white', // Set your desired text color
+                    padding: '10px', // Adjust padding as needed
+                    borderRadius: '5px', // Set your desired border radius
+                    textDecoration: 'none', // Remove underline
+                    '&:hover': {
+                      backgroundColor: '#1976D2', // Set your desired hover background color
+                    },
+                  }}
                 >
                   Sign In
-                </Button>
+                </Link>
                 <Grid container>
                   <Grid item xs>
-                    <Link href="#" variant="body2">
+                    <Link to='#' >
                       Forgot password?
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href={SignUpSide} variant="body2">
-                      {"Don't have an account? Sign Up"}
+                    <Link href="/signup" variant="body2">
+                      {"I Don't have an account? Sign Up"}
                     </Link>
                   </Grid>
                 </Grid>
@@ -138,5 +142,6 @@ export default function SignInSide() {
         </Grid>
       </Box>
     </Container>
+
   );
 }

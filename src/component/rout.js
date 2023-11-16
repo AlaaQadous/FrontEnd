@@ -7,8 +7,8 @@ import ProfileSettings from './component/customer/profil';
 import Navbar from './component/navb';
 import SignUpSide from './component/signup';
 import SignInSide from './component/signin';
-const App = () => {
 
+const App = () => {
   return (
     <Router>
       <Navbar />
@@ -21,6 +21,8 @@ const App = () => {
           <Route path="/signup" element={<SignUpSide/>} />
           <Route path="/signin" element={<SignInSide/>} />
           <Route path="/login" element={<SignInSide/>} />
+
+          
         </Routes>
       </div>
     </Router>

@@ -1,16 +1,13 @@
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+import { Link as MuiLink } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
 import image from './customer/image/12.png';
-import SignInSide from './signin';
 
 export default function SignUpSide() {
   const handleSubmit = (event) => {
@@ -19,19 +16,19 @@ export default function SignUpSide() {
     const email = data.get("email");
     const password = data.get("password");
     const firstName = data.get("firstName");
-    const  lastName = data.get("lastName");
+    const lastName = data.get("lastName");
     if (!email || !password || !firstName || !lastName) {
       console.log("Please fill in all fields");
       return;
     }
-     // Password validation
-     if (password.length < 1 || !/\d/.test(password) || !/[a-zA-Z]/.test(password)) {
+    // Password validation
+    if (password.length < 1 || !/\d/.test(password) || !/[a-zA-Z]/.test(password)) {
       console.log("Password must be at least 6 characters long and contain both letters and numbers");
       return;
     }
     console.log({
-      firstName ,
-      lastName ,
+      firstName,
+      lastName,
       email,
       password,
     });
@@ -41,38 +38,38 @@ export default function SignUpSide() {
     <Container component="main" maxWidth="false"
     >
       <Box
-      sx={{
-        minHeight: "100vh",
-        minWidth:"100vh",
-        backgroundImage: `url(${image})`,
-        backgroundSize: "cover",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
+        sx={{
+          minHeight: "100vh",
+          minWidth: "100vh",
+          backgroundImage: `url(${image})`,
+          backgroundSize: "cover",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
 
-      }}
+        }}
       >
         <Grid container >
-          <CssBaseline /> 
+          <CssBaseline />
           <Grid
-           item
-           xs={12}
-           sm={8}
-           md={5}
-           component={Paper}
-           elevation={6}
-           square
-           sx={{
-             display: "flex",
-             flexDirection: "column",
-             alignItems: "center", 
-             justifyContent: "center", 
-             my: 8,
-             mx: "auto", 
-             backgroundColor: "rgba(255, 255, 255, 0.5)", // Adjust background color and alpha value
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              my: 8,
+              mx: "auto",
+              backgroundColor: "rgba(255, 255, 255, 0.5)", // Adjust background color and alpha value
 
-           }}
+            }}
           >
             <Box
               sx={{
@@ -82,7 +79,7 @@ export default function SignUpSide() {
                 flexDirection: "column",
                 alignItems: "center",
 
-                
+
               }}
             >
               <Typography component="h1" variant="h5">
@@ -92,9 +89,10 @@ export default function SignUpSide() {
                 component="form"
                 noValidate
                 onSubmit={handleSubmit}
-                sx={{ mt: 1 
+                sx={{
+                  mt: 1
 
-                 }}
+                }}
               >
                 <TextField
                   margin="normal"
@@ -116,7 +114,7 @@ export default function SignUpSide() {
                   autoComplete="lastName"
                   autoFocus
                 />
-                
+
                 <TextField
                   margin="normal"
                   required
@@ -137,21 +135,35 @@ export default function SignUpSide() {
                   id="password"
                   autoComplete="current-password"
                 />
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+
+                <MuiLink
+                  href="/"
+                  variant="body2"
+                  sx={{
+                    display: 'block',
+                    width: '100%',
+                    textAlign: 'center',
+                    backgroundColor: 'blue', // Set your desired background color
+                    color: 'white', // Set your desired text color
+                    padding: '10px', // Adjust padding as needed
+                    borderRadius: '5px', // Set your desired border radius
+                    textDecoration: 'none', // Remove underline
+                    '&:hover': {
+                      backgroundColor: '#1976D2', // Set your desired hover background color
+                    },
+                  }}
                 >
-                  Sign Up
-                </Button>
+                  Sign In
+                </MuiLink>
+
+
                 <Grid container>
-                 
                   <Grid item>
-                    <Link href={SignInSide} variant="body2">
+                    <MuiLink href="/signin" variant="body2">
                       {"I have an account? Sign In"}
-                    </Link>
+                    </MuiLink>
                   </Grid>
+
                 </Grid>
               </Box>
             </Box>
