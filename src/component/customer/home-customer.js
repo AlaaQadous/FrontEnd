@@ -46,7 +46,7 @@ const SubmitOrderForm = () => {
                   <input className="form-control" data-inputmask="'alias': 'currency'" style={{ textAlign: 'right' }} value={material} onChange={(e) => setMaterial(e.target.value)} />
                 </div>
                 <div className="text-center">
-                  <button type="button" className="btn btn-lg btn-primary" onClick={handleSubmit} disabled={!selectedImage}>Submit</button>
+                  <button type="button" className="btn btn-lg "  style={{backgroundColor: 'rgb(229, 130, 178)' ,color: 'white'}}onClick={handleSubmit} disabled={!selectedImage}>Submit</button>
                 </div>
               </form>
             </div>

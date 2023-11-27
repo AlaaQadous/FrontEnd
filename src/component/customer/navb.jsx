@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Image from './customer/image/l.png';
-import Image1 from './customer/image/alaa.jpg';
+import Image from './image/l.png';
+import Image1 from './image/alaa.jpg';
 import './navb.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -68,7 +68,6 @@ const Navbar = () => {
               style={{ ...linkStyle, color: 'black' }}
               onClick={() => handleLinkClick("/")}
             >
-              <FontAwesomeIcon icon={faChartBar} style={{ marginRight: '5px' }} />
               <span style={{ paddingTop: '7px' }}>Dashboard</span>
             </Link>
           </li>
@@ -79,7 +78,6 @@ const Navbar = () => {
               style={{ ...linkStyle, color: 'black' }}
               onClick={() => handleLinkClick("/orders")}
             >
-              <FontAwesomeIcon icon={faShoppingCart} style={{ marginRight: '5px' }} />
               <span style={{ paddingTop: '3px' }}>Orders</span>
             </Link>
           </li>
@@ -90,7 +88,6 @@ const Navbar = () => {
               style={{ ...linkStyle, color: 'black' }}
               onClick={() => handleLinkClick("/profile")}
             >
-              <FontAwesomeIcon icon={faUser} style={{ marginRight: '5px' }} />
               <span style={{ paddingTop: '3px' }}>Profile</span>
             </Link>
           </li>

@@ -60,7 +60,7 @@ const ProfileSettings = () => {
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" p={3} py={5}>
             <img className="rounded-circle mt-5" width="150px" src={info.image} alt="Profile" />
             <div className="mb-3">
-              <label htmlFor="formFile" className="btn btn-primary mt-2">
+              <label htmlFor="formFile" className="btn  mt-2" style={{backgroundColor: 'rgb(229, 130, 178)' ,color: 'white'}}>
                 Upload Profile Picture
               </label>
               <input type="file" className="form-control" id="formFile" style={{ display: 'none' }} />
@@ -133,7 +133,7 @@ const ProfileSettings = () => {
               </Grid>
             </Grid>
             <Box mt={5} textAlign="center">
-              <Button variant="contained" color="primary" onClick={handleSubmit}>
+              <Button variant="contained" style={{backgroundColor: 'rgb(229, 130, 178)' ,color: 'white'}} onClick={handleSubmit}>
                 Save Profile
               </Button>
             </Box>
