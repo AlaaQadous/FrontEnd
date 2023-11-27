@@ -8,10 +8,11 @@ import reportWebVitals from './reportWebVitals';
 import ManagesTable from './component/admin/manageEmployee';
 import ReadyOrder from './component/admin/readyOrder';
 import MuiCardExample from './component/admin/addNews';
+import Order from './component/admin/order';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App/>
+    <Order/>
   </React.StrictMode>
 );
 
