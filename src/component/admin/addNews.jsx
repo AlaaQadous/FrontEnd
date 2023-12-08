@@ -66,7 +66,7 @@ const AddNews = () => {
     console.log(formData);
   }
   return (
-    <Container className="rounded mt-5 p-md-5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', position: 'relative' }}>
+    <Container className="rounded mt-5 p-md-5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', position: 'relative'  }}>
       <Button variant="contained" color="primary" style={{ marginRight: '25px', alignSelf: 'flex-end', marginBottom: '20px', backgroundColor: 'rgb(229, 130, 178)', color: 'white', marginTop: '20px' }} onClick={Addhandle} startIcon={<AddIcon />}>
         Add News
       </Button>
@@ -97,7 +97,7 @@ const AddNews = () => {
       ))}
 
       {add && (
-        <Grid container spacing={2} style={{ position: 'absolute', top: '0', left: '50%', transform: 'translate(-50%, 0%)', width: '100%', paddingTop: '100px' }}>
+        <Grid container spacing={2} style={{ position: 'absolute', top: '0', left: '50%', transform: 'translate(-50%, 0%)', width: '100%', paddingTop: '200px' }}>
           <Grid item xs={12} md={6} style={{ width: '600px', margin: 'auto' }}>
             <Card sx={{ maxWidth: 600, margin: 'auto' }}>
               <CardContent>
@@ -136,7 +136,7 @@ const AddNews = () => {
         </Grid>
       )}
       {edit && (
-        <Grid container spacing={2} style={{ position: 'absolute', top: '0', left: '50%', transform: 'translate(-50%, 0%)', width: '100%', paddingTop: '100px' }}>
+        <Grid container spacing={2} style={{ position: 'absolute', top: '0', left: '50%', transform: 'translate(-50%, 0%)', width: '100%', paddingTop: '200px' }}>
           <Grid item xs={12} md={6} style={{ width: '600px', margin: 'auto' }}>
             <Card sx={{ maxWidth: 600, margin: 'auto' }}>
               <CardContent>

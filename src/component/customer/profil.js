@@ -54,8 +54,10 @@ const ProfileSettings = () => {
     });
   };
   return (
+    
+  
     <Container component="div" maxWidth="lg" className="rounded bg-white mt-5 mb-5">
-      <Grid container style={{ paddingTop: '90px' }}>
+      <Grid container style={{ paddingTop: '40px' }}>
         <Grid item xs={12} md={3} className="border-right">
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" p={3} py={5}>
             <img className="rounded-circle mt-5" width="150px" src={info.image} alt="Profile" />
@@ -66,14 +68,11 @@ const ProfileSettings = () => {
               <input type="file" className="form-control" id="formFile" style={{ display: 'none' }} />
             </div>
           </Box>
-
-
-
         </Grid>
         <Grid item xs={12} md={5} className="border-right">
           <Box p={3} py={5}>
             <Box mb={3}>
-              <Typography variant="h4">Profile Settings</Typography>
+              <Typography variant="h4" style={{textAlign:'center'}}>Profile Settings</Typography>
             </Box>
             <Grid container spacing={2}>
               <Grid item xs={12} md={12}>

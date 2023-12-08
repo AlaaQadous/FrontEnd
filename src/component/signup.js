@@ -41,7 +41,6 @@ export default function SignUpSide() {
         sx={{
           minHeight: "100vh",
           minWidth: "100vh",
-          backgroundImage: `url(${image})`,
           backgroundSize: "cover",
           display: "flex",
           flexDirection: "column",

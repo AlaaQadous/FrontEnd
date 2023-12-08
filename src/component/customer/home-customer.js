@@ -24,7 +24,7 @@ const SubmitOrderForm = () => {
 
     <div className="container">
     <div className="row">
-      <div className="col-md-6" style={{ paddingTop: '100px' }}>
+      <div className="col-md-6" style={{ paddingTop: '135px' }}>
         <div className="card mx-auto">
           <div className="card-body">
             <h4 className="card-title" style={{ textAlign: 'center', marginBottom: '20px', color: 'rgb(229, 130, 178)' }}>Submit Order</h4>

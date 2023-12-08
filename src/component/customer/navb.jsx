@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import Image from './image/l.png';
 import Image1 from './image/alaa.jpg';
 import './navb.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartBar, faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
+
 const logoStyle = { width: '120px', height: '100px', paddingLeft: '20px' };
 const linkStyle = { color: 'black' };
 const buttonStyle = { backgroundColor: 'white', border: 'none' };
@@ -40,16 +39,6 @@ const Navbar = () => {
                 onClick={() => handleLinkClick("/logout")}
               >
                 Log out
-              </Link>
-            </button>
-            <button style={buttonStyle}>
-              <Link
-                to="/login"
-                className={`nav-link ${clickedLink === "/logout" ? 'clicked' : ''}`}
-                style={{ ...linkStyle, textDecoration: 'none', color: 'black' }}
-                onClick={() => handleLinkClick("/logout")}
-              >
-                Login
               </Link>
             </button>
           </li>

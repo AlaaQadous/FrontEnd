@@ -108,7 +108,7 @@ const ManagesTable = () => {
         </Table>
       </TableContainer>
       {add && (
-  <div className="row" style={{ position: 'absolute', bottom: '50%', left: '50%', transform: 'translate(-50%, -50%)',top: '0%', }}>
+  <div className="row" style={{ position: 'absolute', bottom: '50%', left: '50%', transform: 'translate(-50%, -50%)',top: '25%', }}>
     <div className="col-md-6" style={{ width: '600px' }}>
       <div className="card mx-auto">
         <div className="card-body">
