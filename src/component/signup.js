@@ -158,7 +158,7 @@ export default function SignUpSide() {
 
                 <Grid container>
                   <Grid item>
-                    <MuiLink href="/signin" variant="body2">
+                    <MuiLink href="/login" variant="body2">
                       {"I have an account? Sign In"}
                     </MuiLink>
                   </Grid>

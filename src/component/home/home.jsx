@@ -1,46 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import './home.css';
-import { FaSignInAlt } from 'react-icons/fa';
-import Image from './image/l.png';
-import Image1 from './image/as.png';
+import Image1 from '../image/as.png';
 import { Container, Typography, Grid, Box, Paper } from '@mui/material';
-import i1 from './image/11.png';
-import i2 from './image/22.png';
-import i3 from './image/111.jpg';
-import i4 from './image/Feather-flags_Signs_Dough_A-rev1.png';
-import i5 from './image/Real_Estate_Post_Mirage_B.png';
-import i6 from './image/Vinyl-Banner_Signs_Dough_A.png';
+import i1 from '../image/11.png';
+import i2 from '../image/22.png';
+import i3 from '../image/111.jpg';
+import i4 from '../image/Feather-flags_Signs_Dough_A-rev1.png';
+import i5 from '../image/Real_Estate_Post_Mirage_B.png';
+import i6 from '../image/Vinyl-Banner_Signs_Dough_A.png';
+import Navbar from '../Nav/mainNav';
+import { height } from '@mui/system';
+
 const logoStyle = { width: '120px', height: '100px', paddingLeft: '20px' };
 const buttonStyle = { border: 'none' };
 
 const Home = () => {
-  const [clickedLink, setClickedLink] = useState(null);
 
-  const handleLinkClick = (link) => {
-    setClickedLink(link);
-  };
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // قم بتعيين قيمة الرؤية بعد تحميل المكون أو في حالة وجود تفاعل آخر
     setIsVisible(true);
   }, []);
+  const font = {
+    fontFamily: 'Pacifico, cursive',
+    // أي خصائص إضافية يمكنك إضافتها هنا
+  };
   return (
     <>
+    
       <section className="bgimage" id="home">
-        <nav className="d-flex justify-content-between">
-          <div>
-            <img src={Image} alt="Your Logo" style={logoStyle} />
-          </div>
-          <ul className="nav">
-            <li className="nav-item">
-              <button style={buttonStyle} onClick={() => handleLinkClick("/login")}>
-                <FaSignInAlt />
-              </button>
-            </li>
-          </ul>
-        </nav>
-
+        
         <img src={Image1} alt="Your Image" style={{ opacity: 0.75 }} />
         <div className="text-overlay fadeIn">
           <h1>We print it...</h1>
@@ -53,11 +42,11 @@ const Home = () => {
 
       <section className={`transition-container ${isVisible ? 'visible' : ''}`}>
 
-      <Box component="section" sx={{ py: 8 }}>
+      <Box component="section" sx={{ py: 8 }} style={font}>
         {/* Inner Section 1 */}
         <Container style={{marginTop:'100px'}}>
           <Paper elevation={0} square>
-            <Typography variant="h2" align="center" sx={{ mb: 4 }}>
+            <Typography variant="h2" align="center" sx={{ mb: 4 }} style={font}>
               Our Solutions
             </Typography>
 
@@ -132,9 +121,9 @@ const Home = () => {
       </Box>
         {/* End Inner Section 2 */}
 
-        <Container style={{marginTop:'160px'}}>
+        <Container style={{marginTop:'160px'}} >
           <Paper elevation={0} square>
-            <Typography variant="h2" align="center" sx={{ mb: 4 }}>
+            <Typography variant="h2" align="center" sx={{ mb: 4 }} style={font}>
             Some of our works 
                         </Typography>
 
@@ -236,11 +225,11 @@ const Home = () => {
 </div>
 </Grid>
     </Grid>
-      <Box component="section" sx={{ py: 8 }}>
+      <Box component="section" sx={{ py: 8 }} style={font}>
         {/* Inner Section 1 */}
         <Container>
           <Paper elevation={0} square>
-            <Typography variant="h2" align="center" sx={{ mb: 4 }}>
+            <Typography variant="h2" align="center" sx={{ mb: 4 }} style={font}>
               Why Choose Us?
             </Typography>
 
@@ -322,14 +311,14 @@ const Home = () => {
         {/* End Inner Section 2 */}
       </Box>
 </section>
-<footer className="bg-light text-center text-white">
+<footer className="bg-light text-center text-white" >
       <div
         className="text-center p-3"
         style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', textAlign: 'center' }}
       >
-        <Typography variant="body2" color="white">
+        <Typography variant="body2" color="white" style={font}>
           © 2023{' '}
-          <a href="https://www.facebook.com/wsaadv" className="text-white">
+          <a href="https://www.facebook.com/wsaadv" className="text-white" style={font}>
             WSA.com
           </a>
         </Typography>

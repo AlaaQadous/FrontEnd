@@ -1,0 +1,38 @@
+ 
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px; /* تقليل ارتفاع الهوامش العلوية والسفلية */
+    height: 70px; /* تقليل ارتفاع الشريط */
+
+  }
+  
+  nav img {
+    width: 80px;
+    height: auto;
+  }
+  
+  ul.nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  ul.nav li {
+    margin-left: 10px;
+  }
+  
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  

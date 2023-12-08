@@ -71,10 +71,13 @@ button {
   }
   p{
     color: black;
+    font-family: 'Pacifico', cursive;
 
   }
   h2{
     color: black;
+    font-family: 'Pacifico', cursive;
+
   }
   
   .image-container:hover img {
