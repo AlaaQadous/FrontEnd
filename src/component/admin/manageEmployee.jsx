@@ -68,7 +68,7 @@ const ManagesTable = () => {
 
   return (
     <Container className="rounded mt-5 p-md-5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', position: 'relative' }}>
-      <Typography variant="h2" className="font-weight-bold" style={{ marginTop: '15px' }}>User Manage</Typography>
+<Typography variant="h2" className="font-weight-bold" style={{ marginTop: '15px', textAlign: 'center' }}>User Manage</Typography>
       <Button variant="contained" color="primary" style={{ alignSelf: 'flex-end', marginBottom: '20px', backgroundColor: 'rgb(229, 130, 178)', color: 'white' }} onClick={Addhandle}>
         <Add />
         Add Employee

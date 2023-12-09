@@ -35,10 +35,10 @@ const Navbar = () => {
               <Link
                 to="/logout"
                 className={`nav-link ${clickedLink === "/logout" ? 'clicked' : ''}`}
-                style={{ ...linkStyle, textDecoration: 'none', color: 'black' }}
+                style={{ ...linkStyle, textDecoration: 'none', color: 'black',fontSize: '20px' }}
                 onClick={() => handleLinkClick("/logout")}
               >
-                Log out
+                Logout
               </Link>
             </button>
           </li>
@@ -54,7 +54,7 @@ const Navbar = () => {
             <Link
               to="/"
               className={`nav-link ${clickedLink === "/" ? 'clicked' : ''}`}
-              style={{ ...linkStyle, color: 'black' }}
+              style={{ ...linkStyle, color: 'black',fontSize: '20px' }}
               onClick={() => handleLinkClick("/")}
             >
               <span style={{ paddingTop: '7px' }}>Dashboard</span>
@@ -64,7 +64,7 @@ const Navbar = () => {
             <Link
               to="/orders"
               className={`nav-link ${clickedLink === "/orders" ? 'clicked' : ''}`}
-              style={{ ...linkStyle, color: 'black' }}
+              style={{ ...linkStyle, color: 'black' ,fontSize: '20px'}}
               onClick={() => handleLinkClick("/orders")}
             >
               <span style={{ paddingTop: '3px' }}>Orders</span>
@@ -74,7 +74,7 @@ const Navbar = () => {
             <Link
               to="/profile"
               className={`nav-link ${clickedLink === "/profile" ? 'clicked' : ''}`}
-              style={{ ...linkStyle, color: 'black' }}
+              style={{ ...linkStyle, color: 'black',fontSize: '20px' }}
               onClick={() => handleLinkClick("/profile")}
             >
               <span style={{ paddingTop: '3px' }}>Profile</span>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Typography, Card, CardContent, CardMedia, Button, Grid, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { Description } from '@mui/icons-material';
 
 const AddNews = () => {
   const cardsData = [

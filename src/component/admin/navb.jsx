@@ -11,7 +11,12 @@ const Navbarr = () => {
     const handleLinkClick = (link) => {
         setClickedLink(link);
     };
+    const [isOrderVisible, setIsOrderVisible] = useState(false);
 
+    const handleOrderClick = () => {
+      // Toggle the visibility state when "Order" is clicked
+      setIsOrderVisible(!isOrderVisible);
+    };
     return (
         <div>
             <nav className="d-flex justify-content-between" style={navv}>
@@ -24,10 +29,10 @@ const Navbarr = () => {
                             <Link
                                 to="/logout"
                                 className={`nav-link ${clickedLink === "/logout" ? 'clicked' : ''}`}
-                                style={{ ...linkStyle, textDecoration: 'none', color: 'black' }}
+                                style={{ ...linkStyle, textDecoration: 'none', color: 'black',fontSize: '20px' }}
                                 onClick={() => handleLinkClick("/logout")}
                             >
-                                Log out
+                                Logout
                             </Link>
                         </button>
                     </li>
@@ -43,39 +48,43 @@ const Navbarr = () => {
                         <Link
                             to="/"
                             className={`nav-link ${clickedLink === "/" ? 'clicked' : ''}`}
-                            style={{ ...linkStyle }}
+                            style={{ ...linkStyle,fontSize: '20px' }}
                             onClick={() => handleLinkClick("/")}
                         >
                             <span>News</span>
                         </Link>
                     </li>
-
-                    <li className="nav-item">
-                        <Link
-                            to="/orders"
-                            className={`nav-link ${clickedLink === "/orders" ? 'clicked' : ''}`}
-                            style={{ ...linkStyle, color: 'black' }}
-                            onClick={() => handleLinkClick("/orders")}
-                        >
-                            <span>New Orders</span>
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link
-                            to="/ready"
-                            className={`nav-link ${clickedLink === "/ready" ? 'clicked' : ''}`}
-                            style={{ ...linkStyle, color: 'black' }}
-                            onClick={() => handleLinkClick("/ready")}
-                        >
-                            <span>Ready Orders</span>
-                        </Link>
-                    </li>
-
+                    
+                    <span onClick={handleOrderClick} style={{cursor: 'pointer',fontSize: '20px' ,marginLeft:"15px", marginBottom:'3px'}}>Order</span>
+      {isOrderVisible && (
+        <ul>
+          <li className="nav-item" style={{listStyle: 'none'}}>
+            <Link
+              to="/orders"
+              className={`nav-link ${clickedLink === "/orders" ? 'clicked' : ''}`}
+              style={{ ...linkStyle, color: 'black', fontSize: '15px' }}
+              onClick={() => handleLinkClick("/orders")}
+            >
+              <span>New Orders</span>
+            </Link>
+          </li>
+          <li className="nav-item" style={{listStyle: 'none'}}>
+            <Link
+              to="/ready"
+              className={`nav-link ${clickedLink === "/ready" ? 'clicked' : ''}`}
+              style={{ ...linkStyle, color: 'black', fontSize: '15px' }}
+              onClick={() => handleLinkClick("/ready")}
+            >
+              <span>Ready Orders</span>
+            </Link>
+          </li>
+        </ul>
+      )}
                     <li className="nav-item">
                         <Link
                             to="/manage"
                             className={`nav-link ${clickedLink === "/manage" ? 'clicked' : ''}`}
-                            style={{ ...linkStyle, color: 'black' }}
+                            style={{ ...linkStyle, color: 'black',fontSize: '20px' }}
                             onClick={() => handleLinkClick("/manage")}
                         >
                             <span>Management</span>
