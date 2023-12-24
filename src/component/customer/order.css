@@ -80,6 +80,14 @@ ul.nav {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1)
 }
 
+.card {
+    /* Existing styles */
+    width: 95%; /* Adjust the width as needed */
+}
+
+
+
+
 .track {
     position: relative;
     background-color: #ddd;

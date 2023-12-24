@@ -30,7 +30,7 @@ const Order = () => {
   ]);
   
   return (
-    <Container className="rounded mt-5 p-md-5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
+    <Container className="rounded mt-5 p-md-5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' , marginLeft: '200px', padding: '20px'  }}>
     <Typography variant="h2" className="font-weight-bold" style={{ marginTop: '15px', marginBottom:'10px', }}>Order Manage</Typography>
     <TableContainer component={Paper} className="table-responsive">
         <Table>

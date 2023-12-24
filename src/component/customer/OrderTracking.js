@@ -86,7 +86,7 @@ const OrderTracking = () => {
   });
 
   return (
-    <div className="container" style={{ paddingTop: '100px' }}>
+    <div className="container" style={{ paddingTop: '80px', marginLeft: '200px'  }}>
       {updatedOrders.map((singleOrder, index) => (
         <article key={index} className="card" style={{ marginBottom: '40px' }}>
           <header className="card-header"> My Orders / Tracking </header>

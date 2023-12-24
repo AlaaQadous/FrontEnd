@@ -65,7 +65,7 @@ const AddNews = () => {
     console.log(formData);
   }
   return (
-    <Container className="rounded mt-5 p-md-5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', position: 'relative'  }}>
+    <Container className="rounded mt-5 p-md-5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', position: 'relative' , marginLeft: '200px', padding: '20px'  }}>
       <Button variant="contained" color="primary" style={{ marginRight: '25px', alignSelf: 'flex-end', marginBottom: '20px', backgroundColor: 'rgb(229, 130, 178)', color: 'white', marginTop: '20px' }} onClick={Addhandle} startIcon={<AddIcon />}>
         Add News
       </Button>

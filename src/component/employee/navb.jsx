@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import Image from './image/l.png';
 import Image1 from './image/alaa.jpg';
 import './navb.css';
+import { useDispatch } from "react-redux";
+import { logOut } from '../../features/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const logoStyle = { width: '120px', height: '100px', paddingLeft: '20px' };
 const verticalNavStyle = {
@@ -24,10 +27,14 @@ const commonLinkStyle = {
 const Navbar = () => {
   const [clickedLink, setClickedLink] = useState(null);
 
-  const handleLinkClick = (link) => {
-    setClickedLink(link);
-  };
+  
+  const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+  const handleLinkClick = () => {
+    dispatch(logOut())
+    return navigate("/login")
+  };
   return (
     <div>
       <nav style={{ display: 'flex', justifyContent: 'space-between'  }}>
@@ -36,21 +43,21 @@ const Navbar = () => {
         </div>
         <ul className="nav" style={{ listStyleType: 'none', padding: '0' }}>
         <li className="nav-item" style={{ marginTop:'20px' , marginRight :'12px'}}>
-            <Link
-              to="/logout"
+            <span
+            
               className={`nav-link ${clickedLink === "/logout" ? 'clicked' : ''}`}
               style={{ ...commonLinkStyle }}
-              onClick={() => handleLinkClick("/logout")}
+              onClick={() => handleLinkClick()}
             >
               <span style={{ paddingTop: '7px' }}>Logout</span>
-            </Link>
+            </span>
           </li>
         </ul>
       </nav>
 
       <div className="virtical-nav" style={verticalNavStyle}>
         <ul className="nav flex-row" style={{ listStyleType: 'none', padding: '0' }}>
-          <li className="nav-item" style={{ textAlign: 'center', marginTop:'50px' }}>
+          <li className="nav-item" style={{ alignItems: 'center', marginTop:'50px' }}>
             <img
               className="rounded-circle mt-3"
               width="90px"
@@ -61,10 +68,9 @@ const Navbar = () => {
           </li>
           <li className="nav-item" style={{ marginTop:'30px'}}>
             <Link
-              to="/"
+              to="/employee"
               className={`nav-link ${clickedLink === "/" ? 'clicked' : ''}`}
               style={{ ...commonLinkStyle }}
-              onClick={() => handleLinkClick("/")}
             >
               <span style={{ paddingTop: '7px' }}>New Orders</span>
             </Link>
@@ -74,7 +80,6 @@ const Navbar = () => {
               to="/order"
               className={`nav-link ${clickedLink === "/order" ? 'clicked' : ''}`}
               style={{ ...commonLinkStyle }}
-              onClick={() => handleLinkClick("/order")}
             >
               <span style={{ paddingTop: '7px' }}>Orders</span>
             </Link>

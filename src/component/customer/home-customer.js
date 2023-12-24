@@ -21,8 +21,7 @@ const SubmitOrderForm = () => {
   };
   return ( 
    
-
-    <div className="container">
+    <div className="container" style={{ marginLeft: '200px' }}>
     <div className="row">
       <div className="col-md-6" style={{ paddingTop: '135px' }}>
         <div className="card mx-auto">

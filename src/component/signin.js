@@ -1,4 +1,3 @@
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import { Link } from "@mui/material";
@@ -7,26 +6,85 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Container } from "@mui/material";
-import image from './customer/image/12.png';
+import Button from "@mui/material/Button";
+import React, { useState } from 'react';
+import { Navigate,useLocation } from 'react-router-dom';
+import Alert from "@mui/material/Alert";
+import { useDispatch, useSelector  } from "react-redux";
+import { loginSuccess } from "../features/authSlice";
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const email = data.get("email");
-    const password = data.get("password");
-    // Basic validation
-    if (!email || !password) {
-      console.log("Please fill in all fields");
-      return;
+  const { role, isSuccess } = useSelector(
+    (state) => state.auth
+  );
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const [error, setError] = useState('');
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+const handleChange = (e) => {
+
+  const { name, value } = e.target;
+  setFormData((prevData) => ({
+    ...prevData,
+    [name]: value ,
+  }));
+};
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  const { email, password } = formData;
+  if (!email || !password ) {
+    setError("Please fill in all fields");
+    return;
+  }
+  let response;
+  try {
+    response = await fetch('http://localhost:3000/users/signin', {
+      method: 'POST',
+      headers:{
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData)
+    }); 
+    if (response.status === 200) {
+      response=await response.json();
+      localStorage.setItem("token",response.token )
+      localStorage.setItem("role",response.role )
+      dispatch(loginSuccess({
+      role:response.role,
+      token:response.token,
+     }))
+    } else {
+      setError("Signin failed");
     }
-    console.log({
-      email,
-      password,
-    });
-  };
+  } catch (error) {
+  
+    setError('Error during signin:', error);
+    setError('Server response:', response?.data);
+
+  }
+};
 
   return (
+    <>
+    {isSuccess === true ? (
+      <Navigate
+        to={
+          role === "user"
+            ? "/customer"
+            : role === "employee"
+            ? "/employee"
+            : "/admin"
+        }
+        state={{ from: location }}
+        replace
+      />
+    ) : (
     <Container component="main" maxWidth="false"
     >
       <Box
@@ -83,16 +141,18 @@ export default function SignInSide() {
 
                 }}
               >
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                />
+               <TextField
+  margin="normal"
+  required
+  fullWidth
+  id="email"
+  label="Email"
+  name="email"  
+  autoComplete="email"
+  onChange={handleChange}
+  autoFocus
+/>
+
                 <TextField
                   margin="normal"
                   required
@@ -102,45 +162,46 @@ export default function SignInSide() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  onChange={handleChange}
+
                 />
 
-                <Link
-                  href="/"
+                <Button
+                  type="submit" 
                   variant="body2"
                   sx={{
                     display: 'block',
                     width: '100%',
                     textAlign: 'center',
-                    backgroundColor: 'blue', // Set your desired background color
-                    color: 'white', // Set your desired text color
-                    padding: '10px', // Adjust padding as needed
-                    borderRadius: '5px', // Set your desired border radius
-                    textDecoration: 'none', // Remove underline
+                    backgroundColor: 'blue',
+                    color: 'white',
+                    padding: '10px',
+                    borderRadius: '5px',
+                    textDecoration: 'none',
                     '&:hover': {
-                      backgroundColor: '#1976D2', // Set your desired hover background color
+                      backgroundColor: '#1976D2',
                     },
                   }}
                 >
                   Sign In
-                </Link>
+                </Button>
                 <Grid container>
-                  <Grid item xs>
-                    <Link to='#' >
-                      Forgot password?
-                    </Link>
-                  </Grid>
+                 
                   <Grid item>
                     <Link href="/signup" variant="body2">
                       {"I Don't have an account? Sign Up"}
                     </Link>
                   </Grid>
                 </Grid>
+                {error && <Alert severity="warning" sx={{ marginTop: "10px" }}>{error}</Alert>}
+
               </Box>
             </Box>
           </Grid>
         </Grid>
       </Box>
     </Container>
-
+    )}
+    </>
   );
 }

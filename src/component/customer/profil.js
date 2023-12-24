@@ -56,7 +56,7 @@ const ProfileSettings = () => {
   return (
     
   
-    <Container component="div" maxWidth="lg" className="rounded bg-white mt-5 mb-5">
+    <Container component="div" maxWidth="lg" className="rounded bg-white mt-5 mb-5" style={{ marginLeft: '200px' }}>
       <Grid container style={{ paddingTop: '40px' }}>
         <Grid item xs={12} md={3} className="border-right">
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" p={3} py={5}>

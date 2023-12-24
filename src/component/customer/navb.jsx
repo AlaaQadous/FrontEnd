@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import Image from './image/l.png';
 import Image1 from './image/alaa.jpg';
 import './navb.css';
+import { useDispatch } from "react-redux";
+import { logOut } from '../../features/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const logoStyle = { width: '120px', height: '100px', paddingLeft: '20px' };
 const linkStyle = { color: 'black' };
@@ -16,11 +19,15 @@ const verticalNavStyle = {
   position: 'fixed',
 };
 
+
 const Navbar = () => {
+  const dispatch = useDispatch();
   const [clickedLink, setClickedLink] = useState(null);
 
-  const handleLinkClick = (link) => {
-    setClickedLink(link);
+  const navigate = useNavigate();
+  const handleLinkClick = () => {
+    dispatch(logOut())
+    return navigate("/login")
   };
 
   return (
@@ -32,14 +39,13 @@ const Navbar = () => {
         <ul className="nav">
           <li className="nav-item">
             <button style={buttonStyle}>
-              <Link
-                to="/logout"
+              <span
                 className={`nav-link ${clickedLink === "/logout" ? 'clicked' : ''}`}
                 style={{ ...linkStyle, textDecoration: 'none', color: 'black',fontSize: '20px' }}
-                onClick={() => handleLinkClick("/logout")}
+                onClick={() => handleLinkClick()}
               >
                 Logout
-              </Link>
+              </span>
             </button>
           </li>
         </ul>
@@ -52,10 +58,10 @@ const Navbar = () => {
           </li>
           <li className="nav-item">
             <Link
-              to="/"
+              to="/customer"
               className={`nav-link ${clickedLink === "/" ? 'clicked' : ''}`}
               style={{ ...linkStyle, color: 'black',fontSize: '20px' }}
-              onClick={() => handleLinkClick("/")}
+            
             >
               <span style={{ paddingTop: '7px' }}>Dashboard</span>
             </Link>
@@ -65,7 +71,7 @@ const Navbar = () => {
               to="/orders"
               className={`nav-link ${clickedLink === "/orders" ? 'clicked' : ''}`}
               style={{ ...linkStyle, color: 'black' ,fontSize: '20px'}}
-              onClick={() => handleLinkClick("/orders")}
+    
             >
               <span style={{ paddingTop: '3px' }}>Orders</span>
             </Link>
@@ -75,7 +81,7 @@ const Navbar = () => {
               to="/profile"
               className={`nav-link ${clickedLink === "/profile" ? 'clicked' : ''}`}
               style={{ ...linkStyle, color: 'black',fontSize: '20px' }}
-              onClick={() => handleLinkClick("/profile")}
+             
             >
               <span style={{ paddingTop: '3px' }}>Profile</span>
             </Link>

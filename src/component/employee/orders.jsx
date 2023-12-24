@@ -52,7 +52,7 @@ const ReadyOrder = () => {
     ]);
 
     return (
-        <Container className="rounded mt-5 p-md-5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px', marginRight: '15px' }}>
+        <Container className="rounded mt-5 p-md-5" style={{ marginLeft: '200px', padding: '20px' ,display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px', marginRight: '15px' }}>
             <Typography variant="h2" className="font-weight-bold" style={{ marginTop: '15px', marginBottom: '15px', }}>Ready Orders</Typography>
 
             <TableContainer component={Paper} className="table-responsive">

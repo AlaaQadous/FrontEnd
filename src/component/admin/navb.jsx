@@ -4,19 +4,24 @@ import Image from './image/l.png';
 import Image1 from './image/alaa.jpg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './navb.css';
-
+import { useDispatch } from "react-redux";
+import { logOut } from '../../features/authSlice';
+import { useNavigate } from 'react-router-dom';
 const Navbarr = () => {
     const [clickedLink, setClickedLink] = useState(null);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const handleLinkClick = (link) => {
-        setClickedLink(link);
+    const handleLinkClick = () => {
+      dispatch(logOut())
+      return navigate("/login")
     };
     const [isOrderVisible, setIsOrderVisible] = useState(false);
 
     const handleOrderClick = () => {
-      // Toggle the visibility state when "Order" is clicked
       setIsOrderVisible(!isOrderVisible);
     };
+    
     return (
         <div>
             <nav className="d-flex justify-content-between" style={navv}>
@@ -26,14 +31,13 @@ const Navbarr = () => {
                 <ul className="nav">
                     <li className="nav-item">
                         <button style={buttonStyle}>
-                            <Link
-                                to="/logout"
+                            <span
                                 className={`nav-link ${clickedLink === "/logout" ? 'clicked' : ''}`}
                                 style={{ ...linkStyle, textDecoration: 'none', color: 'black',fontSize: '20px' }}
-                                onClick={() => handleLinkClick("/logout")}
+                                onClick={() => handleLinkClick()}
                             >
                                 Logout
-                            </Link>
+                            </span>
                         </button>
                     </li>
                 </ul>
@@ -46,24 +50,23 @@ const Navbarr = () => {
                     </li>
                     <li className="nav-item">
                         <Link
-                            to="/"
+                            to="/admin"
                             className={`nav-link ${clickedLink === "/" ? 'clicked' : ''}`}
                             style={{ ...linkStyle,fontSize: '20px' }}
-                            onClick={() => handleLinkClick("/")}
+
                         >
                             <span>News</span>
                         </Link>
                     </li>
                     
-                    <span onClick={handleOrderClick} style={{cursor: 'pointer',fontSize: '20px' ,marginLeft:"15px", marginBottom:'3px'}}>Order</span>
+                    <span onClick={handleOrderClick} style={{cursor: 'pointer',fontSize: '20px' ,marginLeft:"24px", marginBottom:'3px'}}>Order</span>
       {isOrderVisible && (
         <ul>
           <li className="nav-item" style={{listStyle: 'none'}}>
             <Link
-              to="/orders"
+              to="/ord"
               className={`nav-link ${clickedLink === "/orders" ? 'clicked' : ''}`}
               style={{ ...linkStyle, color: 'black', fontSize: '15px' }}
-              onClick={() => handleLinkClick("/orders")}
             >
               <span>New Orders</span>
             </Link>
@@ -73,7 +76,6 @@ const Navbarr = () => {
               to="/ready"
               className={`nav-link ${clickedLink === "/ready" ? 'clicked' : ''}`}
               style={{ ...linkStyle, color: 'black', fontSize: '15px' }}
-              onClick={() => handleLinkClick("/ready")}
             >
               <span>Ready Orders</span>
             </Link>
@@ -85,7 +87,6 @@ const Navbarr = () => {
                             to="/manage"
                             className={`nav-link ${clickedLink === "/manage" ? 'clicked' : ''}`}
                             style={{ ...linkStyle, color: 'black',fontSize: '20px' }}
-                            onClick={() => handleLinkClick("/manage")}
                         >
                             <span>Management</span>
                         </Link>

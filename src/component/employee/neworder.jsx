@@ -54,7 +54,7 @@ const OrderList = () => {
   };
 
   return (
-    <Container sx={{ marginTop: '100px' }}>
+    <Container sx={{ marginTop: '100px' , marginLeft: '200px', padding: '20px' }}>
       <Typography variant="h2" style={{ textAlign: 'center', marginBottom: '40px', }}>New Order</Typography>
       <Grid container spacing={3}>
         {OData.map((Order, index) => (
