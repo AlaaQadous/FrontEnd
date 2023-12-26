@@ -1,34 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { Container, Typography, Grid, Card, CardContent, Button, TextField } from '@mui/material';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { DatePicker } from '@mui/lab';
+import { api } from "../../utiltis/apis";
+import { useSelector } from "react-redux";
+import swal from 'sweetalert';
 
-const OData = [
-  {
-    material: 'Hotel Hilton',
-    width: 188,
-    height: 188,
-    image: 'https://i.imgur.com/JN2wkb6.jpg',
-    description: 'SDFGHJKLJHGFGHJKM,NBVCGHJNMBVGHJMNBVGHJKM,NBVFDRTYUJIKL,MNBVCDFGHB',
-  },
-  {
-    material: 'Hotel Hilton',
-    width: 188,
-    height: 188,
-    image: 'https://i.imgur.com/JN2wkb6.jpg',
-    description: 'SDFGHJKLJHGFGHJKM,NBVCGHJNMBVGHJMNBVGHJKM,NBVFDRTYUJIKL,MNBVCDFGHB',
-  },
-  {
-    material: 'Hotel Hilton',
-    width: 188,
-    height: 188,
-    image: 'https://i.imgur.com/JN2wkb6.jpg',
-    description: 'SDFGHJKLJHGFGHJKM,NBVCGHJNMBVGHJMNBVGHJKM,NBVFDRTYUJIKL,MNBVCDFGHB',
-  },
-];
+
 
 const OrderList = () => {
+
+const [Order, setOrdersData] = useState([]);
+
+const { token } = useSelector((state) => state.auth);
+
+useEffect(() => {
+  const fetchOrders = async () => {
+    try {
+      const response = await api(token).get('/order/getOrderEmpl');
+      console.log(response.data);
+      setOrdersData(response.data.order);
+    } catch (error) {
+      console.error('حدث خطأ أثناء جلب الطلبات:', error);
+    }
+  };
+  fetchOrders();
+}, [token]); 
+  
   const [add, setAdd] = useState(false);
   const [formData, setFormData] = useState({
     Image: '',
@@ -45,28 +44,20 @@ const OrderList = () => {
     console.log(formData);
   }
 
-  const handleInputChange = (event) => {
-    const { id, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
-  };
 
   return (
     <Container sx={{ marginTop: '100px' , marginLeft: '200px', padding: '20px' }}>
       <Typography variant="h2" style={{ textAlign: 'center', marginBottom: '40px', }}>New Order</Typography>
       <Grid container spacing={3}>
-        {OData.map((Order, index) => (
-          <Grid item key={index} xs={12} sm={6} md={4}>
+      {Array.isArray(Order.doc) && Order.doc.map((order) => (
+          <Grid item key={Order.id} xs={12} sm={6} md={4}>
             <Card>
-            
           <img src={Order.image} alt={`Hotel ${Order.name}`} width="100%" height="260" />
                      <CardContent>
                 <Typography variant="h4" component="div">
                   {Order.material}
                   <Typography sx={{ color: '#7db921', fontSize: '20PX', textTransform: 'uppercase', float: 'right', marginTop:'10px' }}>
-                    {Order.width} <span style={{ fontSize: '0.8em' }}>&times;</span> {Order.height}
+                    {Order.size}
                   </Typography>
                 </Typography>
                 <div style={{ marginTop: '10px', marginBottom: '20px', textAlign: 'justify', textJustify: 'inter-word' }}>
