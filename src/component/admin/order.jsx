@@ -97,18 +97,20 @@ const Order = () => {
       <TableCell style={{ textAlign: 'center' }}>{order.size}</TableCell>
       <TableCell style={{ textAlign: 'center' }}>{order.material}</TableCell>
       <TableCell style={{ textAlign: 'center' }}>
-      <IconButton color="secondary" onClick={() => handleProcessOrder(order._id)}>
-  <Avatar style={{ backgroundColor: "green" }}>
-    <Check />
-  </Avatar>
-</IconButton>
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <IconButton color="secondary" onClick={() => handleProcessOrder(order._id)}>
+                      <Avatar style={{ backgroundColor: 'green' }}>
+                        <Check />
+                      </Avatar>
+                    </IconButton>
 
-        <IconButton color="secondary" onClick={() => handleProcessorder(order._id)}>
-          <Avatar style={{ backgroundColor: "red" }}>
-            <Clear />
-          </Avatar>
-        </IconButton>
-      </TableCell>
+                    <IconButton color="secondary" onClick={() => handleProcessorder(order._id)}>
+                      <Avatar style={{ backgroundColor: 'red' }}>
+                        <Clear />
+                      </Avatar>
+                    </IconButton>
+                  </div>
+                </TableCell>
     </TableRow>
   ))}
 </TableBody>

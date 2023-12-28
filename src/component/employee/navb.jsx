@@ -46,7 +46,7 @@ const Navbar = () => {
             <span
             
               className={`nav-link ${clickedLink === "/logout" ? 'clicked' : ''}`}
-              style={{ ...commonLinkStyle }}
+              style={{ ...commonLinkStyle,textDecoration: 'none' }}
               onClick={() => handleLinkClick()}
             >
               <span style={{ paddingTop: '7px' }}>Logout</span>
