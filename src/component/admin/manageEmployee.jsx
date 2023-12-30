@@ -5,11 +5,32 @@ import Add from '@mui/icons-material/Add';
 import { api } from "../../utiltis/apis";
 import { useSelector } from "react-redux";
 import CloseIcon from '@mui/icons-material/Close';
+import swal from 'sweetalert';
+
 
 const ManagesTable = () => {
+
   const handleDelete = (userId) => {
     console.log(`Deleting user with ID: ${userId}`);
+    try {
+      const response =  api(token).delete(`/users/deleteuser/${userId}`);
+      console.log(response.data);
+      if (response.data) {
+        swal({
+          title: "User deleted",
+          icon: "success"
+        }).then((isOk) => {
+          if (isOk) {
+          }
+        });
+      }
+      return response.data; 
+    } catch (error) {
+      console.error('حدث خطأ أثناء معالجة الطلب:', error);
+      throw error;
+    }
   };
+  
   const handleClose = () => {
     setAdd(false);
     setFormData(null);
@@ -18,10 +39,8 @@ const ManagesTable = () => {
   const [users, setUsers] = useState([]);
   const [add, setAdd] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    username: '',
     email: '',
-    phone: '',
     password: '',
   });
 
@@ -32,6 +51,21 @@ const ManagesTable = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(formData);
+    try {
+      const response =  api(token).post("/users/addEmployee", formData );
+      if (response.status === 200) {
+        swal({
+          title: 'You succeeded',
+          icon: 'success',
+        });
+      } else {
+        console.log('failed');
+      }
+    }
+     catch (error) {
+      console.error('error:', error);
+    }
+
   };
 
   const handleInputChange = (event) => {
@@ -100,7 +134,7 @@ const ManagesTable = () => {
         </Table>
       </TableContainer>
       {add && (
-        <div className="row" style={{ position: 'absolute', bottom: '50%', left: '50%', transform: 'translate(-50%, -50%)', top: '18%' }}>
+        <div className="row" style={{ position: 'absolute', bottom: '50%', left: '50%', transform: 'translate(-50%, -50%)', top: '30%' }}>
           <div className="col-md-6" style={{ width: '600px' }}>
             <div className="card mx-auto">
               <div className="card-body">
@@ -112,25 +146,16 @@ const ManagesTable = () => {
                 <h4 className="card-title" style={{ textAlign: 'center', marginBottom: '20px', color: 'rgb(229, 130, 178)' }}>New Employee</h4>
                 <form className="forms-sample" onSubmit={handleSubmit}>
                   <div className="mb-3">
-                    <label>First Name</label>
+                    <label>Employee Name</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="firstName"
-                      value={formData.firstName}
+                      id="username"
+                      value={formData.username}
                       onChange={handleInputChange}
                     />
                   </div>
-                  <div className="mb-3">
-                    <label>Last Name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="lastName"
-                      value={formData.lastName}
-                      onChange={handleInputChange}
-                    />
-                  </div>
+                
                   <div className="mb-3">
                     <label>Email</label>
                     <input
@@ -141,16 +166,7 @@ const ManagesTable = () => {
                       onChange={handleInputChange}
                     />
                   </div>
-                  <div className="mb-3">
-                    <label>Phone</label>
-                    <input
-                      type="tel"
-                      className="form-control"
-                      id="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                    />
-                  </div>
+               
                   <div className="mb-3" style={{ marginBottom: '20px' }}>
                     <label>Password</label>
                     <input

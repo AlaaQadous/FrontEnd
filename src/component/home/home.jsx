@@ -2,17 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './home.css';
 import Image1 from '../image/as.png';
 import { Container, Typography, Grid, Box, Paper } from '@mui/material';
-import i1 from '../image/11.png';
-import i2 from '../image/22.png';
-import i3 from '../image/111.jpg';
-import i4 from '../image/Feather-flags_Signs_Dough_A-rev1.png';
-import i5 from '../image/Real_Estate_Post_Mirage_B.png';
-import i6 from '../image/Vinyl-Banner_Signs_Dough_A.png';
-import Navbar from '../Nav/mainNav';
-import { height } from '@mui/system';
-
-const logoStyle = { width: '120px', height: '100px', paddingLeft: '20px' };
-const buttonStyle = { border: 'none' };
 
 const Home = () => {
 
@@ -23,8 +12,25 @@ const Home = () => {
   }, []);
   const font = {
     fontFamily: 'Pacifico, cursive',
-    // أي خصائص إضافية يمكنك إضافتها هنا
   };
+
+  const [worksData, setWorksData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/news/get'); 
+        const data = await response.json();
+        console.log(data)
+        setWorksData(data.news.doc);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    fetchData(); 
+  }, []);
+  
   return (
     <>
     
@@ -120,111 +126,30 @@ const Home = () => {
         </Container>
       </Box>
         {/* End Inner Section 2 */}
+        <Container style={{ marginTop: '160px' }}>
+  <Paper elevation={0} square>
+    <Typography variant="h2" align="center" sx={{ mb: 4 }} style={font}>
+      Some of our works
+    </Typography>
+  </Paper>
 
-        <Container style={{marginTop:'160px'}} >
-          <Paper elevation={0} square>
-            <Typography variant="h2" align="center" sx={{ mb: 4 }} style={font}>
-            Some of our works 
-                        </Typography>
+  <Grid container spacing={1}>
+  {worksData && worksData.map((work) => (
+      <Grid item xs={12} sm={4} key={work.id}>
+        <div className="card">
+          <div className="image-container">
+            <img src={work.image} alt="Card Image" />
+            <div className="card-content">
+              <p>{work.description}</p>
+              <h2>{work.title}</h2>
+            </div>
+          </div>
+        </div>
+      </Grid>
+    ))}
+  </Grid>
+</Container>
 
-          </Paper>
-        </Container>
-        <Grid container spacing={1}>
-        <Grid item xs={12} sm={4}>
-
-        <div className="card" >
-      <div className="image-container">
-        <img src={i1} alt="Card Image" />
-        <div className="card-content">
-        <p>Some description or content for your card goes here.
-        <h2 >Card Title</h2>
-
-        </p>
-
-      </div>
-      </div>
-    </div>
-    </Grid>
-    <Grid item xs={12} sm={4}>
-
-    <div className="card" >
-    <div className="image-container">
-
-      <img src={i2} alt="Card Image" />
-      <div className="card-content">
-        <p>Some description or content for your card goes here.
-        <h2 >Card Title</h2>
-
-        </p>
-
-      </div>
-      </div>
-    </div> 
-    </Grid>
-    <Grid item xs={12} sm={4}>
- 
-    <div className="card" >
-    <div className="image-container">
-
-      <img src={i3} alt="Card Image"  style={{height:'450px'}}/>
-      <div className="card-content">
-        <p>Some description or content for your card goes here.
-        <h2 >Card Title</h2>
-
-        </p>
-
-      </div>
-    </div>
-    </div>
-    </Grid>
-    <Grid item xs={12} sm={4}>
-
-<div className="card" >
-<div className="image-container">
-<img src={i4} alt="Card Image" />
-<div className="card-content">
-        <p>Some description or content for your card goes here.
-        <h2 >Card Title</h2>
-
-        </p>
-
-      </div>
-</div>
-</div>
-</Grid>
-<Grid item xs={12} sm={4}>
-
-<div className="card" >
-<div className="image-container">
-
-<img src={i5} alt="Card Image" />
-<div className="card-content">
-        <p>Some description or content for your card goes here.
-        <h2 >Card Title</h2>
-
-        </p>
-
-      </div>
-</div>
-</div> 
-</Grid>
-<Grid item xs={12} sm={4}>
-
-<div className="card" >
-<div className="image-container">
-
-<img src={i6} alt="Card Image" />
-<div className="card-content">
-        <p>Some description or content for your card goes here.
-        <h2 >Card Title</h2>
-
-        </p>
-
-      </div>
-</div>
-</div>
-</Grid>
-    </Grid>
       <Box component="section" sx={{ py: 8 }} style={font}>
         {/* Inner Section 1 */}
         <Container>

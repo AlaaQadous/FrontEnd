@@ -1,127 +1,240 @@
-import React, { useState } from 'react';
-import { Container, Typography, Card, CardContent, CardMedia, Button, Grid, TextField } from '@mui/material';
+
+import React, { useState, useEffect } from 'react';
+import { Container, Typography, Card, CardContent, CardMedia, Button, Grid, TextField, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-
+import { api } from '../../utiltis/apis';
+import { useSelector } from 'react-redux';
+import CloseIcon from '@mui/icons-material/Close';
+import swal from 'sweetalert';
 const AddNews = () => {
-  const cardsData = [
-    {
-      image: 'https://images.pexels.com/photos/3765114/pexels-photo-3765114.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-      text: 'Some example text some example text. John Doe is an architect and engineer',
-    },
-    {
-      image: 'https://images.pexels.com/photos/3765114/pexels-photo-3765114.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-      text: 'Some example text some example text. John Doe is an architect and engineer',
-    },
-    {
-      image: 'https://images.pexels.com/photos/3765114/pexels-photo-3765114.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-      description: 'Some example text some example text. John Doe is an architect and engineer',
-    },
-    {
-      image: 'https://images.pexels.com/photos/3765114/pexels-photo-3765114.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-      text: 'Some example text some example text. John Doe is an architect and engineer',
-    },
-    {
-      image: 'https://images.pexels.com/photos/3765114/pexels-photo-3765114.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-      text: 'Some example text some example text. John Doe is an architect and engineer',
-    },
-    {
-      image: 'https://images.pexels.com/photos/3765114/pexels-photo-3765114.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-      description: 'Some example text some example text. John Doe is an architect and engineer',
-    },
-  ];
-  const [add, setAdd] = useState(false);
-  const [formData, setFormData] = useState({
-    Image: '',
-    Description: '',
-  });
+  const { token } = useSelector((state) => state.auth);
 
+  // main
+  const [cardsData, setcardsData] = useState([]);
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await api(token).get('/news/');
+        console.log(response.data);
+        setcardsData(response.data.news);
+      } catch (error) {
+        console.error('error', error);
+      }
+    };
+    fetchOrders();
+  }, [token]);
+ 
+  // add
+  const [add, setAdd] = useState(false);
+  // close Add
+  const handleClose = () => {
+    setAdd(false);
+    setFormData1(null);
+  };
+  // مشان تظهر للاضافة
   const Addhandle = (e) => {
     e.preventDefault();
     setAdd(true);
   };
 
-  const onAdd = (event) => {
-    event.preventDefault();
-    console.log(formData);
-  }
+  const [formData1, setFormData1] = useState({
+    myfile: null,
+    description: '',
+  });
 
-  const handleInputChange = (event) => {
-    const { id, value } = event.target;
-    setFormData((prevData) => ({
+  const handleChange1 = (e) => {
+    const { name, value, files } = e.target;
+    setFormData1((prevData) => ({
       ...prevData,
-      [id]: value,
+      [name]: name === 'myfile' ? files[0] : value,
     }));
   };
 
-  const [edit, setEdit] = useState(false);
+  // back add news
+  const onAdd = async (event) => {
+    event.preventDefault();
+    console.log(formData1);
+    try {
+      const formData2 = new FormData();
+      formData2.append('description', formData1.description);
+      formData2.append('myfile', formData1.myfile);
+      const response = await api(token).post('/news/addNews', formData2);
+      if (response.status === 200) {
+        swal({
+          title: 'You successfully',
+          icon: 'success',
+        });
+      } else {
+        console.log('failed');
+      }
+    } catch (error) {
+      console.log('Error during:', error);
+      console.log('Server response:');
+    }
+  };
 
-  const Edithandle = (e) => {
-    e.preventDefault();
+  // edit
+  const [edit, setEdit] = useState(false);
+  const [selectedNewsId, setSelectedNewsId] = useState(null);
+
+  // تظهر شاشة التعديل
+  const Edithandle = (id) => {
+    setSelectedNewsId(id);
     setEdit(true);
   };
 
-  const onEdit = (event) => {
+  // colse edit
+  const handleClose1 = () => {
+    setAdd(false);
+    setEdit(false);
+  };
+
+  const [formData, setFormData] = useState({
+    myfile: null,
+    description: '',
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value, files } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: name === 'myfile' ? files[0] : value,
+    }));
+  };
+
+  // back edit
+  const onEdit = async (event) => {
     event.preventDefault();
-    console.log(formData);
-  }
+    if (!selectedNewsId) {
+      console.error('Missing selectedNewsId for edit');
+      return;
+    }
+
+    try {
+      const formData1 = new FormData();
+      formData1.append('description', formData.description);
+      formData1.append('myfile', formData.myfile);
+
+      const response = await api(token).patch(`/news/update/${selectedNewsId}`, formData1);
+
+      if (response.status === 200) {
+        swal({
+          title: 'Updated successfully',
+          icon: 'success',
+        });
+        setEdit(false); // Close the edit form after successful update
+      } else {
+        console.log('Failed to edit');
+      }
+    } catch (error) {
+      console.log('Error during edit:', error);
+    }
+  };
+
   return (
-    <Container className="rounded mt-5 p-md-5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', position: 'relative' , marginLeft: '200px', padding: '20px'  }}>
-      <Button variant="contained" color="primary" style={{ marginRight: '25px', alignSelf: 'flex-end', marginBottom: '20px', backgroundColor: 'rgb(229, 130, 178)', color: 'white', marginTop: '20px' }} onClick={Addhandle} startIcon={<AddIcon />}>
+    <Container
+      className="rounded mt-5 p-md-5"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        position: 'relative',
+        marginLeft: '200px',
+        padding: '20px',
+        
+      }}
+    >
+      <Button
+        variant="contained"
+        color="primary"
+        style={{
+          marginRight: '25px',
+          alignSelf: 'flex-end',
+          marginBottom: '20px',
+          backgroundColor: 'rgb(229, 130, 178)',
+          color: 'white',
+          marginTop: '20px',
+        }}
+        onClick={Addhandle}
+        startIcon={<AddIcon />}
+      >
         Add News
       </Button>
-
-      {Array.from({ length: Math.ceil(cardsData.length / 3) }, (v, i) => i * 3).map((startIndex) => (
-        <Grid container spacing={2} key={startIndex}>
-          {cardsData.slice(startIndex, startIndex + 3).map((card, index) => (
-            <Grid item key={index} xs={12} md={4}>
-              <Card sx={{ maxWidth: 300, margin: '20px 0', marginLeft: '30px' }}>
-                <CardMedia
-                  component="img"
-                  height="250"
-                  image={card.image}
-                  alt="Card image"
-                />
+      <Grid container spacing={3}>
+        {Array.isArray(cardsData.doc) &&
+          cardsData.doc.map((card) => (
+            <Grid item key={card._id} xs={12} sm={6} md={4}>
+              <Card>
+                <CardMedia component="img" height="250" image={card.image} alt="Card image" />
                 <CardContent sx={{ textAlign: 'center' }}>
                   <Typography variant="body2" color="text.secondary">
                     {card.text || card.description}
                   </Typography>
-                  <Button variant="contained" color="primary" style={{ marginTop: '20px', backgroundColor: 'rgb(229, 130, 178)', color: 'white' }} onClick={Edithandle}>
-                    Edit
-                  </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      style={{ marginTop: '20px', backgroundColor: 'rgb(229, 130, 178)', color: 'white' }}
+                      onClick={() => Edithandle(card._id)}
+                    >
+                      Edit
+                    </Button>
+                    
                 </CardContent>
               </Card>
             </Grid>
           ))}
-        </Grid>
-      ))}
-
+      </Grid>
       {add && (
-        <Grid container spacing={2} style={{ position: 'absolute', top: '0', left: '50%', transform: 'translate(-50%, 0%)', width: '100%', paddingTop: '200px' }}>
+        <Grid
+          container
+          spacing={2}
+          style={{
+            position: 'absolute',
+            top: '0',
+            left: '50%',
+            transform: 'translate(-50%, 0%)',
+            width: '100%',
+            paddingTop: '200px',
+          }}
+        >
           <Grid item xs={12} md={6} style={{ width: '600px', margin: 'auto' }}>
             <Card sx={{ maxWidth: 600, margin: 'auto' }}>
+              <div style={{ textAlign: 'right' }}>
+                <Button onClick={handleClose} style={{ color: 'rgb(229, 130, 178)' }}>
+                  <CloseIcon />
+                </Button>
+              </div>{' '}
               <CardContent>
-                <Typography variant="h4" style={{ textAlign: 'center', marginBottom: '20px', color: 'rgb(229, 130, 178)' }}>Add News</Typography>
+                <Typography variant="h4" style={{ textAlign: 'center', marginBottom: '20px', color: 'rgb(229, 130, 178)' }}>
+                  Add News
+                </Typography>
                 <form className="forms-sample" onSubmit={onAdd}>
                   <div className="mb-3">
-                    <label> Image</label>
-                    <input
+                    <label>Image</label>
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="myfile"
+                      name="myfile"
                       type="file"
-                      className="form-control"
-                      id="Image"
-                      value={formData.Image}
-
-                      onChange={handleInputChange}
-                      />
+                      inputProps={{ accept: 'myfile/*' }}
+                      onChange={handleChange1}
+                    />
                   </div>
                   <div className="mb-3">
                     <label>Description</label>
                     <TextField
-                      type="text"
-                      className="form-control"
-                      id="Description"
-                      value={formData.Description}
-                      onChange={handleInputChange}
-                      />
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="description"
+                      label="description"
+                      name="description"
+                      autoComplete="description"
+                      autoFocus
+                      onChange={handleChange1}
+                    />
                   </div>
                   <div className="text-center">
                     <Button type="submit" variant="contained" style={{ backgroundColor: 'rgb(229, 130, 178)', color: 'white' }}>
@@ -135,32 +248,56 @@ const AddNews = () => {
         </Grid>
       )}
       {edit && (
-        <Grid container spacing={2} style={{ position: 'absolute', top: '0', left: '50%', transform: 'translate(-50%, 0%)', width: '100%', paddingTop: '200px' }}>
+        <Grid
+          container
+          spacing={2}
+          style={{
+            position: 'absolute',
+            top: '0',
+            left: '50%',
+            transform: 'translate(-50%, 0%)',
+            width: '100%',
+            paddingTop: '200px',
+          }}
+        >
           <Grid item xs={12} md={6} style={{ width: '600px', margin: 'auto' }}>
             <Card sx={{ maxWidth: 600, margin: 'auto' }}>
+              <div style={{ textAlign: 'right' }}>
+                <Button onClick={handleClose1} style={{ color: 'rgb(229, 130, 178)' }}>
+                  <CloseIcon />
+                </Button>
+              </div>{' '}
               <CardContent>
-                <Typography variant="h4" style={{ textAlign: 'center', marginBottom: '20px', color: 'rgb(229, 130, 178)' }}>Edit News</Typography>
+                <Typography variant="h4" style={{ textAlign: 'center', marginBottom: '20px', color: 'rgb(229, 130, 178)' }}>
+                  Edit News
+                </Typography>
                 <form className="forms-sample" onSubmit={onEdit}>
                   <div className="mb-3">
-                    <label> Image</label>
-                    <input
+                    <label>Image</label>
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="myfile"
+                      name="myfile"
                       type="file"
-                      className="form-control"
-                      id="Image"
-                      value={formData.Image}
-
+                      inputProps={{ accept: 'myfile/*' }}
                       onChange={handleInputChange}
-                      />
+                    />
                   </div>
                   <div className="mb-3">
                     <label>Description</label>
                     <TextField
-                      type="text"
-                      className="form-control"
-                      id="Description"
-                      value={formData.Description}
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="description"
+                      label="description"
+                      name="description"
+                      autoComplete="description"
+                      autoFocus
                       onChange={handleInputChange}
-                      />
+                    />
                   </div>
                   <div className="text-center">
                     <Button type="submit" variant="contained" style={{ backgroundColor: 'rgb(229, 130, 178)', color: 'white' }}>
@@ -173,7 +310,6 @@ const AddNews = () => {
           </Grid>
         </Grid>
       )}
-      
     </Container>
   );
 };

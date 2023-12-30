@@ -50,14 +50,12 @@ const Order = () => {
     try {
       const response = await api(token).delete(`/order/${orderId}`);
       console.log(response.data);
-      // يجب وضع كود swal هنا، بعد التحقق من أن العملية تمت بنجاح
       if (response.data) {
         swal({
           title: "Order deleted",
           icon: "success"
         }).then((isOk) => {
           if (isOk) {
-            // هنا يمكنك إضافة أي تحديثات إضافية للواجهة إذا كنت بحاجة إليها
           }
         });
       }
