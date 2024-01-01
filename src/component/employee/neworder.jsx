@@ -20,9 +20,9 @@ const OrderList = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   const [formData, setFormData] = useState({
-    comment: '',
-    price: '',
-    DeliveryDate: '',
+    comment:'',
+    price:'',
+    DeliveryDate:'',
   });
 
   const handleChange = (e) => {
@@ -52,11 +52,14 @@ const OrderList = () => {
 
   const onAdd = async (event) => {
     event.preventDefault();
+    console.log('Form Data:', formData); 
     try {
       const response = await api(token).put(
         `order/info/${selectedOrder._id}`,
-        formData
+        JSON.stringify(formData),
+        { headers: { 'Content-Type': 'application/json' } }
       );
+      console.log(response);
       if (response.status === 200) {
         swal({
           title: 'You succeeded',
@@ -142,6 +145,7 @@ const OrderList = () => {
                     label="Price"
                     name="price"
                     autoComplete="price"
+                    value={formData.price} 
                     autoFocus
                     onChange={handleChange}
                   />
@@ -153,6 +157,7 @@ const OrderList = () => {
                     name="DeliveryDate"
                     label="DeliveryDate"
                     type="date"
+                    value={formData.DeliveryDate}
                     id="DeliveryDate"
                     InputLabelProps={{
                       shrink: true,
@@ -169,6 +174,7 @@ const OrderList = () => {
                     name="comment"
                     autoComplete="comment"
                     autoFocus
+                    value={formData.comment}
                     onChange={handleChange}
                   />
 

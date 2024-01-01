@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Card, CardContent, CardMedia, Button, Grid, TextField, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -6,6 +5,8 @@ import { api } from '../../utiltis/apis';
 import { useSelector } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close';
 import swal from 'sweetalert';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 const AddNews = () => {
   const { token } = useSelector((state) => state.auth);
 
@@ -23,7 +24,7 @@ const AddNews = () => {
     };
     fetchOrders();
   }, [token]);
- 
+
   // add
   const [add, setAdd] = useState(false);
   // close Add
@@ -131,6 +132,29 @@ const AddNews = () => {
     }
   };
 
+  /////////////////////////////////////////////////////////////////////////////////////////////
+  // Inside your handleToggleClick function
+  const [toggleState, setToggleState] = useState("off");
+
+  const handleToggleClick = async (cardid) => {
+    try {
+      const response = await api(token).patch(`/news/update1/${cardid}`);
+
+      if (response.status === 200) {
+        // Assuming the backend returns updatedNews.visible as a boolean
+        const isNewsVisible = response.data.updatedNews.visible;
+
+        // Update the toggleState based on the visibility
+        const newState = isNewsVisible ? 'on' : 'off';
+        setToggleState(newState);
+      } else {
+        console.log('Toggle function failed');
+      }
+    } catch (error) {
+      console.log('Error during toggle function:', error);
+    }
+  };
+
   return (
     <Container
       className="rounded mt-5 p-md-5"
@@ -141,7 +165,7 @@ const AddNews = () => {
         position: 'relative',
         marginLeft: '200px',
         padding: '20px',
-        
+
       }}
     >
       <Button
@@ -170,15 +194,28 @@ const AddNews = () => {
                   <Typography variant="body2" color="text.secondary">
                     {card.text || card.description}
                   </Typography>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{ marginTop: '20px', backgroundColor: 'rgb(229, 130, 178)', color: 'white' }}
-                      onClick={() => Edithandle(card._id)}
-                    >
-                      Edit
-                    </Button>
-                    
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ marginTop: '20px', backgroundColor: 'rgb(229, 130, 178)', color: 'white' }}
+                    onClick={() => Edithandle(card._id)}
+                  >
+                    Edit
+                  </Button>
+                  <IconButton
+                    style={{
+                      marginTop: '20px',
+                      marginLeft: '20px',
+                      backgroundColor: card.visible ? 'green' : 'red',
+                      color: 'white',
+                      borderRadius: '50%',
+                    }}
+                    onClick={() => handleToggleClick(card._id)}
+                  >
+                    {toggleState === 'on' ? <CheckCircleIcon /> : <RadioButtonUncheckedIcon />}
+                  </IconButton>
+
+
                 </CardContent>
               </Card>
             </Grid>

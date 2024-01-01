@@ -85,7 +85,7 @@ const Order = () => {
     <TableRow key={order._id} className="bg-blue">
       <TableCell style={{ textAlign: 'center', verticalAlign: 'middle' }}>
       {order.image && (
-        <img src={`YOUR_BASE_URL/${order.image}`} alt="" style={{ borderRadius: '0', width: '100px', height: '100px', margin: 'auto' }} />
+        <img src={order.image} alt="" style={{ borderRadius: '0', width: '100px', height: '100px', margin: 'auto' }} />
       )}
     </TableCell>
       <TableCell style={{ textAlign: 'center' }}>

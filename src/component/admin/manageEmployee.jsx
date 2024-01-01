@@ -24,7 +24,6 @@ const ManagesTable = () => {
           }
         });
       }
-      return response.data; 
     } catch (error) {
       console.error('حدث خطأ أثناء معالجة الطلب:', error);
       throw error;
@@ -113,7 +112,7 @@ const ManagesTable = () => {
              
              <TableRow key={user._id} className="bg-blue">
   <TableCell>
-    <Avatar src={user.image} alt="" style={{ padding: '8px', textAlign: 'center' }}/>
+    <img src={user.image} alt="" style={{ padding: '8px', textAlign: 'center',width:"60px",height:"60px" ,borderRadius: '50%'}}/>
   </TableCell>
   <TableCell>
     <Typography className="pl-lg-5 pl-md-3 pl-1 name" style={{ padding: '8px', textAlign: 'center' }}>{user.userName}</Typography>
