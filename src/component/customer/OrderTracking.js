@@ -1,110 +1,81 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './order.css';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { api } from "../../utiltis/apis";
+import { useSelector } from "react-redux";
 
 const OrderTracking = () => {
-  const [orders, setOrders] = useState([
-    {
-      id: '123456',
-      status: 'Ready for pickup',
-      Date: '12/2/2025',
-      steps: ['Order confirmed', 'Details', 'Ready for pickup'],
-      product: {
-        details: 'fghjk,mnb',
-        image: '/path/to/product-image.jpg',
-      },
-      recommendation: 'توصية: يمكنك إضافة منتج إضافي لتحسين تجربتك',
-    },
-    {
-      id: '789012',
-      status: 'Details',
-      Date: '12/2/2025',
-      steps: ['Order confirmed', 'Details', 'Ready for pickup'],
-      product: {
-        details: 'dfghj,mnbfvdc',
-        image: '/path/to/product-image.jpg',
-      },
-      recommendation: 'توصية: يمكنك إضافة منتج إضافي لتحسين تجربتك',
-    },
-    {
-      id: '789012',
-      status: 'Order confirmed',
-      Date: '12/2/2025',
-      steps: ['Order confirmed', 'Details', 'Ready for pickup'],
-      product: {
-        details: 'fghj,m njhmn',
-        image: '/path/to/product-image.jpg',
-      },
-      recommendation: 'توصية: يمكنك إضافة منتج إضافي لتحسين تجربتك',
-    },
-    {
-      id: '789012',
-      status: 'null',
-      Date: '12/2/2025',
-      steps: ['Order confirmed', 'Details', 'Ready for pickup'],
-      product: {
-        details: 'dfghjkm',
-        image: '/path/to/product-image.jpg',
-      },
-      recommendation: 'توصية: يمكنك إضافة منتج إضافي لتحسين تجربتك',
-    },
+  const [orders, setOrders] = useState([]);
+  const { token } = useSelector((state) => state.auth);
 
-  ]);
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await api(token).get("/order/get1");
+        console.log(response.data);
+        setOrders(response.data.orders);
+      } catch (error) {
+        console.error('حدث خطأ أثناء جلب الطلبات:', error);
+      }
+    };
+    fetchOrders();
+  }, [token]);
 
   const initialSteps = [
-    { id: 1, text: 'Order confirmed', icon: 'bi bi-check2', active: false },
-    { id: 2, text: 'Details', icon: 'bi bi-person', active: false },
-    { id: 3, text: 'Ready for pickup', icon: 'bi bi-box2-fill', active: false },
+    { id: 1, text: 'New', icon: 'bi bi-check2', active: false },
+    { id: 2, text: 'InProgress', icon: 'bi bi-person', active: false },
+    { id: 3, text: 'Ready', icon: 'bi bi-box2-fill', active: false },
   ];
+
   const updatedOrders = orders.map(singleOrder => {
     const steps = initialSteps.map((step, index) => {
-      if (singleOrder.status === 'Order confirmed' && step.text === 'Order confirmed') {
+      if (singleOrder.state === 'New' && step.text === 'New') {
         step.active = true;
         step.showRecommendation = false;
-
       }
-      else if (singleOrder.status === 'Details' && (step.text === 'Order confirmed' || step.text === 'Details')) {
+      else if (singleOrder.state === 'InProgress' && (step.text === 'New' || step.text === 'InProgress')) {
         step.active = true;
         step.showRecommendation = true;
       }
-      else if (singleOrder.status === 'Ready for pickup' && (step.text === 'Order confirmed' || step.text === 'Details'||step.text === 'Ready for pickup')) {
+      else if (singleOrder.state === 'Ready' && (step.text === 'New' || step.text === 'InProgress' || step.text === 'Ready')) {
         step.active = true;
         step.showRecommendation = false;
-
       }
       else {
         step.active = false;
         step.showRecommendation = false;
-
       }
-      return { ...step }; 
+      return { ...step };
     });
 
     return { ...singleOrder, updatedSteps: steps };
   });
 
   return (
-    <div className="container" style={{ paddingTop: '80px', marginLeft: '200px'  }}>
+    <div className="container" style={{ paddingTop: '50px', marginLeft: '155px' }}>
       {updatedOrders.map((singleOrder, index) => (
         <article key={index} className="card" style={{ marginBottom: '40px' }}>
           <header className="card-header"> My Orders / Tracking </header>
           <div className="card-body">
-            <h6>Order {singleOrder.id} </h6>
-            <article className="card">
+            <h6>OrderID: {singleOrder._id} </h6>
+            <article className="card" >
               <div className="card-body row">
-                <div className="col">
-                  <strong>Date of Order :</strong> {singleOrder.Date}
+                <div className="col"style={{paddingRight:"130px"}} >
+                  <strong>Date of Order :</strong> {singleOrder.date}
                 </div>
-                <div className="col" style={{ paddingLeft: '260px' }}>
-                  <strong>Status:</strong> {singleOrder.status}
+                <div className="col" style={{paddingRight:"130px"}}>
+                  <strong>State:</strong> {singleOrder.state}
+                </div>
+                <div className="col">
+                  <strong>DeliveryDate:</strong> {singleOrder.DeliveryDate}
                 </div>
               </div>
             </article>
             <div className="track">
               {singleOrder.updatedSteps.map((step) => (
-                <div key={step.id} className={`step ${step.active ? 'active' : ''}`}>
+                <div key={step._id} className={`step ${step.active ? 'active' : ''}`}>
                   <span className="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className={step.icon} viewBox="0 0 16 16">
                       <path d={step.icon === 'bi bi-box2-fill' ? "M3.75 0a1 1 0 0 0-.8.4L/.1 4.2a.5.5 0 0 0-.1.3V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4.5a.5.5 0 0 0-.1-.3L13.05.4a1 1 0 0 0-.8-.4h-8.5ZM15 4.667V5H1v-.333L1.5 4h6V1h1v3h6l.5.667Z" :
@@ -121,17 +92,21 @@ const OrderTracking = () => {
               <li className="col-md-4">
                 <figure className="itemside mb-3">
                   <div className="aside">
-                    <img src={singleOrder.product.image} className="img-sm border" alt="Product" />
+                    {singleOrder.image && (
+                      <img src={singleOrder.image} className="img-sm border" alt="Product" style={{width:"150px" , height:"130px"}} />
+                    )}
                   </div>
                   <figcaption className="info align-self-center">
-                    <p className="title">{singleOrder.product.details}</p>
+                   
+                      <p className="title">{singleOrder.description}</p>
+                    
                   </figcaption>
                 </figure>
               </li>
             </ul>
             {singleOrder.updatedSteps.map((step) => (
-              <div key={step.id} className={`step ${step.active ? 'active' : ''}`}>
-                {step.showRecommendation && step.text === 'Details'&& (
+              <div key={step._id} className={`step ${step.active ? 'active' : ''}`}>
+                {step.showRecommendation && step.text === 'InProgress'&& (
                   <div>
                     <hr />
                     <header style={{ marginBottom: '4px' }}>
@@ -142,11 +117,11 @@ const OrderTracking = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: '40px' }} width="10" height="10" fill="currentColor" className="bi bi-circle-fill" viewBox="0 0 16 16">
                           <circle cx="8" cy="8" r="8" />
                         </svg>
-                        <p style={{ marginLeft: '5px', marginTop: '9px' }}>{singleOrder.recommendation} </p>
+                        <p style={{ marginLeft: '5px', marginTop: '9px' }}> Your order price is  {singleOrder.price} and it will be delivered {singleOrder.DeliveryDate} </p>
                       </div>
                       <div>
-                        <Button type="button" className="btn btn-outline-success" style={{ backgroundColor: 'white' }}>Yes</Button>
-                        <Button type="button" className="btn btn-outline-danger" style={{ marginRight: '10px', backgroundColor: 'white' }}>No</Button>
+                        <Button type="button" className="btn btn-outline-success" style={{ backgroundColor: 'white' , marginRight: '10px'}}>Yes</Button>
+                        <Button type="button" className="btn btn-outline-danger" style={{ marginRight: '20px', backgroundColor: 'white' }}>No</Button>
                       </div>
                     </div>
                   </div>
@@ -158,6 +133,7 @@ const OrderTracking = () => {
         </article>
       ))}
     </div>
+    
   );
 };
 

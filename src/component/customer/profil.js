@@ -1,100 +1,124 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Container, Grid, Box, TextField, Button, Typography } from '@mui/material';
 import Image from './image/alaa.jpg';
+import { api } from "../../utiltis/apis";
+import { useSelector } from "react-redux";
+import swal from 'sweetalert';
 
 const ProfileSettings = () => {
-  const [info, setInfo] = useState({
-    firstName: 'Alaa',
-    lastName: 'qadous',
-    email: 'alaa@gmail.com',
-    password: 'q24#57',
-    image: Image,
-  });
 
   const [profile, setProfile] = useState({
-    firstName: '',
-    lastName: '',
+    username: '',
     email: '',
     password: '',
-    newPassword: '',
+    myfile: '',
   });
+  const { token } = useSelector((state) => state.auth);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProfile((prevProfile) => ({ ...prevProfile, [name]: value }));
+    const { name, value, files } = e.target;
+    setProfile((prevProfile) => ({
+      ...prevProfile,
+      [name]: name === 'myfile' ? files[0] : value,
+    }));
   };
 
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData();
     formData.append("email", profile.email);
     formData.append("password", profile.password);
-    formData.append("newPassword", profile.newPassword);
-    formData.append("firstName", profile.firstName);
-    formData.append("lastName", profile.lastName);
+    formData.append("userame", profile.userame);
+    formData.append("myfile", profile.myfile);
 
-    if (!profile.email || !profile.password || !profile.firstName || !profile.lastName) {
+    if (!profile.email || !profile.password || !profile.username || !profile.myfile) {
       console.log("Please fill in all fields");
       return;
     }
 
     // Password validation
-    if (profile.newPassword.length < 6 || !/\d/.test(profile.newPassword) || !/[a-zA-Z]/.test(profile.newPassword)) {
+    if (profile.password.length < 6 || !/\d/.test(profile.password) || !/[a-zA-Z]/.test(profile.password)) {
       console.log("Password must be at least 6 characters long and contain both letters and numbers");
       return;
     }
 
     console.log({
-      firstName: profile.firstName,
-      lastName: profile.lastName,
+      username: profile.username,
       email: profile.email,
       password: profile.password,
-      newPassword: profile.newPassword,
+      myfile: profile.myfile
     });
+    const formData1 = new FormData();
+    formData1.append("username", profile.username)
+    formData1.append("password", profile.password)
+    formData1.append("email", profile.email)
+    formData1.append("myfile", profile.myfile)
+    try {
+      const response = await api(token).put("/users/profile", formData1);
+      console.log(response);
+
+      if (response.status === 200) {
+        swal({
+          title: "Successfully updated",
+          icon: "success"
+        });
+      } else {
+        console.log("Update failed");
+      }
+    } catch (error) {
+      console.log('Error:', error.message);
+    }
+
+  };
+  const fileInputRef = useRef();
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
   };
   return (
-    
-  
-    <Container component="div" maxWidth="lg" className="rounded bg-white mt-5 mb-5" style={{ marginLeft: '200px' }}>
+    <Container component="div" maxWidth="lg" className="rounded bg-white mt-5 mb-5" style={{ marginLeft: '300px' }}>
       <Grid container style={{ paddingTop: '40px' }}>
         <Grid item xs={12} md={3} className="border-right">
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" p={3} py={5}>
-            <img className="rounded-circle mt-5" width="150px" src={info.image} alt="Profile" />
+            <img className="rounded-circle mt-5" src={Image} width="150px" alt="Profile" />
             <div className="mb-3">
-              <label htmlFor="formFile" className="btn  mt-2" style={{backgroundColor: 'rgb(229, 130, 178)' ,color: 'white'}}>
+              <label htmlFor="formFile" className="btn mt-2" style={{ backgroundColor: 'rgb(229, 130, 178)', color: 'white' }} onClick={handleButtonClick}>
                 Upload Profile Picture
               </label>
-              <input type="file" className="form-control" id="formFile" style={{ display: 'none' }} />
+              <input
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                margin="normal"
+                required
+                fullWidth
+                id="myfile"
+                name="myfile"
+                type="file"
+                inputProps={{ accept: 'myfile/*' }}
+                onChange={handleInputChange}
+              />
             </div>
+
           </Box>
         </Grid>
         <Grid item xs={12} md={5} className="border-right">
           <Box p={3} py={5}>
             <Box mb={3}>
-              <Typography variant="h4" style={{textAlign:'center'}}>Profile Settings</Typography>
+              <Typography variant="h4" style={{ textAlign: 'center', marginBottom: '20px' }}>Profile Settings</Typography>
             </Box>
             <Grid container spacing={2}>
               <Grid item xs={12} md={12}>
                 <TextField
                   fullWidth
-                  label="First Name"
+                  label="User Name"
                   variant="outlined"
-                  placeholder={info.firstName}
+                  name="username"
+                  onChange={handleInputChange}
+                  style={{ marginBottom: '20px' }}
+                />
 
-                  name="firstName"
-                  onChange={handleInputChange}
-                />
-              </Grid>
-              <Grid item xs={12} md={12}>
-                <TextField
-                  fullWidth
-                  label="Last Name"
-                  variant="outlined"
-                  placeholder="Last Name"
-                  name="lastName"
-                  onChange={handleInputChange}
-                />
               </Grid>
               <Grid item xs={12} md={12}>
 
@@ -105,18 +129,7 @@ const ProfileSettings = () => {
                   placeholder="Email"
                   name="email"
                   onChange={handleInputChange}
-                />
-              </Grid>
-
-              <Grid item xs={12} md={12}>
-                <TextField
-                  fullWidth
-                  label=" Old Password"
-                  variant="outlined"
-                  placeholder="Password"
-                  name="password"
-                  onChange={handleInputChange}
-                  type="password"
+                  style={{ marginBottom: '20px' }}
                 />
               </Grid>
               <Grid item xs={12} md={12}>
@@ -125,14 +138,15 @@ const ProfileSettings = () => {
                   label=" New Password"
                   variant="outlined"
                   placeholder="Password"
-                  name="newPassword"
+                  name="password"
                   onChange={handleInputChange}
                   type="password"
+                  style={{ marginBottom: '20px' }}
                 />
               </Grid>
             </Grid>
             <Box mt={5} textAlign="center">
-              <Button variant="contained" style={{backgroundColor: 'rgb(229, 130, 178)' ,color: 'white'}} onClick={handleSubmit}>
+              <Button variant="contained" style={{ backgroundColor: 'rgb(229, 130, 178)', color: 'white' }} onClick={handleSubmit}>
                 Save Profile
               </Button>
             </Box>
