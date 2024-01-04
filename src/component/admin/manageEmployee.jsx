@@ -10,25 +10,24 @@ import swal from 'sweetalert';
 
 const ManagesTable = () => {
 
-  const handleDelete = (userId) => {
+  const handleDelete = async (userId) => {
     console.log(`Deleting user with ID: ${userId}`);
     try {
-      const response =  api(token).delete(`/users/deleteuser/${userId}`);
+      const response = await api(token).delete(`/users/deleteuser/${userId}`);
       console.log(response.data);
       if (response.data) {
         swal({
           title: "User deleted",
           icon: "success"
-        }).then((isOk) => {
-          if (isOk) {
-          }
         });
+        // Additional actions after deletion confirmation (if any)
       }
     } catch (error) {
       console.error('حدث خطأ أثناء معالجة الطلب:', error);
       throw error;
     }
   };
+  
   
   const handleClose = () => {
     setAdd(false);
@@ -38,20 +37,21 @@ const ManagesTable = () => {
   const [users, setUsers] = useState([]);
   const [add, setAdd] = useState(false);
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
+      username: '',
+      password: '',
+      email: '',    
   });
 
   const Addhandle = () => {
     setAdd(true);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData);
-    try {
-      const response =  api(token).post("/users/addEmployee", formData );
+    console.log('Form submitted', formData);
+          try {
+      const response = await api(token).post("/users/addEmployee", formData);
+  
       if (response.status === 200) {
         swal({
           title: 'You succeeded',
@@ -60,12 +60,11 @@ const ManagesTable = () => {
       } else {
         console.log('failed');
       }
-    }
-     catch (error) {
+    } catch (error) {
       console.error('error:', error);
     }
-
   };
+  
 
   const handleInputChange = (event) => {
     const { id, value } = event.target;

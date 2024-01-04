@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from 'react';
-import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar, IconButton, Button } from '@mui/material';
+import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Avatar } from '@mui/material';
 import { api } from "../../utiltis/apis";
 import { useSelector } from "react-redux";
 
@@ -47,7 +47,7 @@ const ReadyOrder = () => {
                                     <Typography className="pl-lg-5 pl-md-3 pl-1 name">{order.date}</Typography>
                                 </TableCell>
                                 <TableCell>{order.description}</TableCell>
-                                <TableCell>{order.employee}</TableCell>
+                                <TableCell>{order.employeeName}</TableCell>
                                 <TableCell>{order.DeliveryDate}</TableCell>
                                 <TableCell>{order.price}</TableCell>
 

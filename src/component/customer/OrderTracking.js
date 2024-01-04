@@ -52,7 +52,10 @@ const OrderTracking = () => {
 
     return { ...singleOrder, updatedSteps: steps };
   });
-
+  const handleChange = (e) => {
+   
+  };
+  
   return (
     <div className="container" style={{ paddingTop: '50px', marginLeft: '155px' }}>
       {updatedOrders.map((singleOrder, index) => (
@@ -120,7 +123,7 @@ const OrderTracking = () => {
                         <p style={{ marginLeft: '5px', marginTop: '9px' }}> Your order price is  {singleOrder.price} and it will be delivered {singleOrder.DeliveryDate} </p>
                       </div>
                       <div>
-                        <Button type="button" className="btn btn-outline-success" style={{ backgroundColor: 'white' , marginRight: '10px'}}>Yes</Button>
+                        <Button type="button" className="btn btn-outline-success" style={{ backgroundColor: 'white' , marginRight: '10px'}} onChange={handleChange} >Yes</Button>
                         <Button type="button" className="btn btn-outline-danger" style={{ marginRight: '20px', backgroundColor: 'white' }}>No</Button>
                       </div>
                     </div>

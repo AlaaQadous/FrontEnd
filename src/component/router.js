@@ -18,7 +18,6 @@ import Order from './admin/order';
 import ReadyOrder from './admin/readyOrder';
 import ManagesTable from './admin/manageEmployee';
 import OrderList from './employee/neworder';
-
 const App = () => { 
   const dispatch = useDispatch();
 
@@ -41,6 +40,7 @@ role:localStorage.getItem("role")
           <Route path="/login" element={<SignInSide/>} />
           <Route path="/home" element={<Home/>} />
           <Route path="/signup" element={<SignUpSide/>} />
+
           //start 
           <Route element={<Protect  role={"user"} />}>
           <Route path="/customer" element={<> <Customer/>< OrderTracking /> </>} />
@@ -48,18 +48,25 @@ role:localStorage.getItem("role")
           <Route path="/profile" element={<> <Customer/><ProfileSettings /></>} />
           </Route>
           //end 
+
+
           ///start
           <Route element={<Protect  role={"admin"} />}>
           <Route path="/admin" element={ <> <Admin/> <AddNews /></>} />
           <Route path="/ready" element={<> <Admin/> <ReadyOrder /></>} />
           <Route path="/ord" element={<> <Admin/> <Order/></>} />
           <Route path="/manage" element={<><Admin/> <ManagesTable /></>}/>
+          <Route path="/myfro" element={<><Admin/> <ProfileSettings /></>}/>
+
           </Route>
           ///end
+
+
           //start
           <Route element={<Protect  role={"employee"} />}>
           <Route  path="/employee" element={<><Employee/><OrderList/></>} />
-          <Route  path="/order" element={<><Employee/><ReadyOrder/></>} />
+          <Route  path="/order" element={<><Employee/><ReadyOrder/></>} /> 
+          <Route  path="/account" element={<><Employee/><ProfileSettings /></>} /> 
           </Route>
           //end
         </Routes>

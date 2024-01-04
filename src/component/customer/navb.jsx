@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Image from './image/l.png';
 import Image1 from './image/alaa.jpg';
@@ -6,7 +6,8 @@ import './navb.css';
 import { useDispatch } from "react-redux";
 import { logOut } from '../../features/authSlice';
 import { useNavigate } from 'react-router-dom';
-
+import {  useSelector } from "react-redux";
+import { api } from "../../utiltis/apis";
 const logoStyle = { width: '120px', height: '100px', paddingLeft: '20px' };
 const linkStyle = { color: 'black' };
 const buttonStyle = { backgroundColor: 'white', border: 'none' };
@@ -18,8 +19,6 @@ const verticalNavStyle = {
   height: '100vh',
   position: 'fixed',
 };
-
-
 const Navbar = () => {
   const dispatch = useDispatch();
   const [clickedLink, setClickedLink] = useState(null);
@@ -29,7 +28,23 @@ const Navbar = () => {
     dispatch(logOut())
     return navigate("/login")
   };
-
+  const { token } = useSelector((state) => state.auth);
+  const [ima , setImage]=useState();
+  useEffect(() => {
+      const fetchOrders = async () => {
+        try {
+          const response = await api(token).get("/users/image");
+          console.log(response.data);
+          setImage(response.data.user.doc[0].image);
+        } catch (error) {
+          console.error('حدث خطأ أثناء جلب الطلبات:', error);
+        }
+      };
+    
+      if (token) {
+        fetchOrders();
+      }
+    }, [token]);
   return (
     <div>
       <nav className="d-flex justify-content-between" >
@@ -54,7 +69,7 @@ const Navbar = () => {
       <div className="virtical-nav" style={verticalNavStyle}>
         <ul className="nav flex-column">
           <li className="nav-item" style={{ marginBottom: '15px', textAlign: 'center', marginTop: '15px', }}>
-            <img className="rounded-circle mt-3" width="90px" src={Image1} alt="Profile" style={{ marginTop: '3px' }} />
+            <img className="rounded-circle mt-3" width="90px" src={ima} alt="Profile" style={{ marginTop: '3px' }} />
           </li>
           <li className="nav-item">
             <Link

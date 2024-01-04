@@ -5,8 +5,7 @@ import { api } from '../../utiltis/apis';
 import { useSelector } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close';
 import swal from 'sweetalert';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
 const AddNews = () => {
   const { token } = useSelector((state) => state.auth);
 
@@ -134,7 +133,7 @@ const AddNews = () => {
 
   /////////////////////////////////////////////////////////////////////////////////////////////
   // Inside your handleToggleClick function
-  const [toggleState, setToggleState] = useState("off");
+  const [toggleState, setToggleState] = useState("");
 
   const handleToggleClick = async (cardid) => {
     try {
@@ -143,10 +142,13 @@ const AddNews = () => {
       if (response.status === 200) {
         // Assuming the backend returns updatedNews.visible as a boolean
         const isNewsVisible = response.data.updatedNews.visible;
-
-        // Update the toggleState based on the visibility
         const newState = isNewsVisible ? 'on' : 'off';
         setToggleState(newState);
+        swal({
+          title: 'Updated ',
+          icon: 'success',
+        });
+
       } else {
         console.log('Toggle function failed');
       }
@@ -212,7 +214,7 @@ const AddNews = () => {
                     }}
                     onClick={() => handleToggleClick(card._id)}
                   >
-                    {toggleState === 'on' ? <CheckCircleIcon /> : <RadioButtonUncheckedIcon />}
+                    {card.visible ? '✓' : '✗'}
                   </IconButton>
 
 
