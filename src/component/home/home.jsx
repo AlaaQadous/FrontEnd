@@ -167,7 +167,7 @@ const Home = () => {
           <Grid container spacing={4}>
             {/* Column 1 */}
             <Grid item xs={12} sm={6}>
-              <Paper elevation={0} square sx={{ textAlign: 'center', p: 3, border: '1px solid #ddd', borderRadius: '8px', height: '80%', minHeight: '200px', width: '80%' }}>
+              <Paper elevation={0} square sx={{ textAlign: 'center', p: 3, border: '1px solid #ddd', borderRadius: '8px', height: '95%', minHeight: '200px', width: '80%' }}>
                 <div className="elementskit-box-header elementor-animation-" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div className="elementskit-info-box-icon" style={{ marginRight: '10px' }}>
                     <aside>
@@ -187,7 +187,7 @@ const Home = () => {
 
             {/* Column 2 */}
             <Grid item xs={12} sm={6}>
-              <Paper elevation={0} square sx={{ textAlign: 'center', p: 3, border: '1px solid #ddd', borderRadius: '8px', height: '80%', minHeight: '200px', width: '80%' }}>
+              <Paper elevation={0} square sx={{ textAlign: 'center', p: 3, border: '1px solid #ddd', borderRadius: '8px', height: '95%', minHeight: '200px', width: '80%' }}>
                 <div className="elementskit-box-header elementor-animation-" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div class="elementskit-box-header elementor-animation-">
                     <div class="elementskit-info-box-icon  ">
@@ -209,7 +209,7 @@ const Home = () => {
           
             {/* Column 3 */}
   <Grid item xs={12} sm={6} style={{ margin: 'auto', marginTop:'30px' }}>
-    <Paper elevation={0} square sx={{ textAlign: 'center', p: 3, border: '1px solid #ddd', borderRadius: '8px', width: '80%',minHeight: '200px', width: '80%' }}>
+    <Paper elevation={0} square sx={{ textAlign: 'center', p: 3, border: '1px solid #ddd', borderRadius: '8px', width: '95%',minHeight: '200px', width: '80%' }}>
       {/* Content for Centered Column */}
       <div className="elementskit-box-header elementor-animation-" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div class="elementskit-box-header elementor-animation-">

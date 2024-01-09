@@ -61,7 +61,7 @@ const Navbar = () => {
           <img src={Image} alt="Your Logo" style={logoStyle} />
         </div>
         <ul className="nav" style={{ listStyleType: 'none', padding: '0' }}>
-          <li className="nav-item" style={{ marginTop: '20px', marginRight: '12px' }}>
+          <li className="nav-item" style={{ marginTop: '10px', marginRight: '12px' }}>
             <Link
               className={`nav-link ${clickedLink === "/logout" ? 'clicked' : ''}`}
               style={{ ...commonLinkStyle, textDecoration: 'none' }}
@@ -76,7 +76,7 @@ const Navbar = () => {
 
       <div className="virtical-nav" style={verticalNavStyle}>
         <ul className="nav flex-row" style={{ listStyleType: 'none', padding: '0' }}>
-          <li className="nav-item" style={{ alignItems: 'center', marginTop: '50px', marginLeft: "27px" }}>
+          <li className="nav-item" style={{ alignItems: 'center', marginTop: '20px', marginLeft: "27px" }}>
           <img
   className="rounded-circle mt-3"
   width="90px"

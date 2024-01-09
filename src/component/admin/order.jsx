@@ -28,7 +28,6 @@ const Order = () => {
     try {
       const response = await api(token).patch(`/order/${orderId}`);
       console.log(response.data);
-      // يجب وضع كود swal هنا، بعد التحقق من أن العملية تمت بنجاح
       if (response.data) {
         swal({
           title: "Order updated to be  confirmed",
@@ -75,7 +74,8 @@ const Order = () => {
               <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>Image</TableCell>
               <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>Order Date</TableCell>
               <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>Description</TableCell>
-              <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>Size</TableCell>
+              <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>Length</TableCell>
+              <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>Width</TableCell>
               <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>Material</TableCell>
               <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>Actions</TableCell>
             </TableRow>
@@ -92,7 +92,8 @@ const Order = () => {
         <Typography className="pl-lg-5 pl-md-3 pl-1 name">{order.date}</Typography>
       </TableCell>
       <TableCell style={{ textAlign: 'center' }}>{order.description}</TableCell>
-      <TableCell style={{ textAlign: 'center' }}>{order.size}</TableCell>
+      <TableCell style={{ textAlign: 'center' }}>{order.lengthValue}</TableCell>
+      <TableCell style={{ textAlign: 'center' }}>{order.widthValue}</TableCell>
       <TableCell style={{ textAlign: 'center' }}>{order.material}</TableCell>
       <TableCell style={{ textAlign: 'center' }}>
                   <div style={{ display: 'flex', justifyContent: 'center' }}>

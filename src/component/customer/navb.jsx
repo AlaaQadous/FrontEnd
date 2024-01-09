@@ -68,8 +68,15 @@ const Navbar = () => {
 
       <div className="virtical-nav" style={verticalNavStyle}>
         <ul className="nav flex-column">
-          <li className="nav-item" style={{ marginBottom: '15px', textAlign: 'center', marginTop: '15px', }}>
-            <img className="rounded-circle mt-3" width="90px" src={ima} alt="Profile" style={{ marginTop: '3px' }} />
+        <li className="nav-item" style={{ alignItems: 'center', marginTop: '20px', marginLeft: "27px" }}>
+          <img
+  className="rounded-circle mt-3"
+  width="90px"
+  src={ima}
+  alt="Profile"
+  style={{ marginTop: '3px', borderRadius: '50%' }}
+/>
+
           </li>
           <li className="nav-item">
             <Link

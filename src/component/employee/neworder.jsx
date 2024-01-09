@@ -88,16 +88,17 @@ const OrderList = () => {
                   <Typography variant="h4" component="div">
                     {order.material}
                     <Typography
-                      sx={{
-                        color: '#7db921',
-                        fontSize: '20PX',
-                        textTransform: 'uppercase',
-                        float: 'right',
-                        marginTop: '10px',
-                      }}
-                    >
-                      {order.size}
-                    </Typography>
+  sx={{
+    color: '#7db921',
+    fontSize: '30px',
+    textTransform: 'uppercase',
+    float: 'right',
+    marginTop: '3px',
+  }}
+>
+  {order.lengthValue} &times; {order.widthValue}
+</Typography>
+
                   </Typography>
                   <div style={{ marginTop: '10px', marginBottom: '20px', textAlign: 'justify', textJustify: 'inter-word' }}>
                     <p

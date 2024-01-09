@@ -6,6 +6,7 @@ import { api } from "../../utiltis/apis";
 import { useSelector } from "react-redux";
 import CloseIcon from '@mui/icons-material/Close';
 import swal from 'sweetalert';
+import Alert from "@mui/material/Alert";
 
 
 const ManagesTable = () => {
@@ -20,7 +21,6 @@ const ManagesTable = () => {
           title: "User deleted",
           icon: "success"
         });
-        // Additional actions after deletion confirmation (if any)
       }
     } catch (error) {
       console.error('حدث خطأ أثناء معالجة الطلب:', error);
@@ -39,29 +39,39 @@ const ManagesTable = () => {
   const [formData, setFormData] = useState({
       username: '',
       password: '',
-      email: '',    
+      email: '', 
+      myfile:null,   
   });
+  const [error, setError] = useState('');
 
   const Addhandle = () => {
     setAdd(true);
   };
-
+let response;
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('Form submitted', formData);
+
+    const formData1 = new FormData();
+formData1.append('username', formData.username);
+formData1.append('password', formData.password);
+formData1.append('email', formData.email);
+formData1.append('myfile',formData.myfile)
           try {
-      const response = await api(token).post("/users/addEmployee", formData);
-  
+            response = await api(token).post("/users/addEmployee",  JSON.stringify(formData),
+            { headers: { 'Content-Type': 'application/json' } }
+             );
+              
       if (response.status === 200) {
         swal({
           title: 'You succeeded',
           icon: 'success',
         });
       } else {
-        console.log('failed');
+        setError('failed');
       }
     } catch (error) {
-      console.error('error:', error);
+      setError('error:', error);
     }
   };
   
@@ -175,9 +185,12 @@ const ManagesTable = () => {
                       onChange={handleInputChange}
                     />
                   </div>
+                  
                   <div className="text-center">
                     <button type="submit" className="btn btn-lg " style={{ backgroundColor: 'rgb(229, 130, 178)', color: 'white' }}>Add</button>
                   </div>
+                  {error && <Alert severity="warning" sx={{ marginTop: "10px" }}>{error}</Alert>}
+
                 </form>
               </div>
             </div>

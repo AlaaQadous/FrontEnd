@@ -122,6 +122,7 @@ const AddNews = () => {
           title: 'Updated successfully',
           icon: 'success',
         });
+        window.location.reload(); 
         setEdit(false); // Close the edit form after successful update
       } else {
         console.log('Failed to edit');
@@ -144,10 +145,8 @@ const AddNews = () => {
         const isNewsVisible = response.data.updatedNews.visible;
         const newState = isNewsVisible ? 'on' : 'off';
         setToggleState(newState);
-        swal({
-          title: 'Updated ',
-          icon: 'success',
-        });
+    
+        window.location.reload(); 
 
       } else {
         console.log('Toggle function failed');
@@ -179,7 +178,7 @@ const AddNews = () => {
           marginBottom: '20px',
           backgroundColor: 'rgb(229, 130, 178)',
           color: 'white',
-          marginTop: '20px',
+          marginTop: '30px',
         }}
         onClick={Addhandle}
         startIcon={<AddIcon />}

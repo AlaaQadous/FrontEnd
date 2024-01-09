@@ -1,10 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef ,useEffect} from 'react';
 import { Container, Grid, Box, TextField, Button, Typography } from '@mui/material';
-import Image from './image/alaa.jpg';
 import { api } from "../../utiltis/apis";
 import { useSelector } from "react-redux";
 import swal from 'sweetalert';
-
 const ProfileSettings = () => {
 
   const [profile, setProfile] = useState({
@@ -77,12 +75,28 @@ const ProfileSettings = () => {
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
+  const [ima , setImage]=useState();
+  useEffect(() => {
+      const fetchOrders = async () => {
+        try {
+          const response = await api(token).get("/users/image");
+          console.log(response.data);
+          setImage(response.data.user.doc[0].image);
+        } catch (error) {
+          console.error('حدث خطأ أثناء جلب الطلبات:', error);
+        }
+      };
+    
+      if (token) {
+        fetchOrders();
+      }
+    }, [token]);
   return (
     <Container component="div" maxWidth="lg" className="rounded bg-white mt-5 mb-5" style={{ marginLeft: '300px' }}>
-      <Grid container style={{ paddingTop: '40px' }}>
+      <Grid container style={{ paddingTop: '60px' }}>
         <Grid item xs={12} md={3} className="border-right">
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" p={3} py={5}>
-            <img className="rounded-circle mt-5" src={Image} width="150px" alt="Profile" />
+            <img className="rounded-circle mt-5" src={ima} width="150px" alt="Profile" />
             <div className="mb-3">
               <label htmlFor="formFile" className="btn mt-2" style={{ backgroundColor: 'rgb(229, 130, 178)', color: 'white' }} onClick={handleButtonClick}>
                 Upload Profile Picture

@@ -5,8 +5,46 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { api } from "../../utiltis/apis";
 import { useSelector } from "react-redux";
-
+import swal from 'sweetalert';
 const OrderTracking = () => {
+
+
+  const handleChange = (singleOrder) => {
+    try {
+      const response =  api(token).patch(`/order/orders/${singleOrder}`);
+      if (response) {
+        swal({
+          title: "Order updated to be  confirmed",
+          icon: "success"
+        })
+      }
+      return response.data; 
+    } catch (error) {
+      console.error('حدث خطأ أثناء معالجة الطلب:', error);
+      throw error;
+    }
+  };
+
+  const handleProcessorder = async (orderId) => {
+    try {
+      const response = await api(token).delete(`/order/${orderId}`);
+      console.log(response.data);
+      if (response.data) {
+        swal({
+          title: "Order deleted",
+          icon: "success"
+        }).then((isOk) => {
+          if (isOk) {
+          }
+        });
+      }
+      return response.data; 
+    } catch (error) {
+      console.error('حدث خطأ أثناء معالجة الطلب:', error);
+      throw error;
+    }
+  };
+
   const [orders, setOrders] = useState([]);
   const { token } = useSelector((state) => state.auth);
 
@@ -15,7 +53,9 @@ const OrderTracking = () => {
       try {
         const response = await api(token).get("/order/get1");
         console.log(response.data);
-        setOrders(response.data.orders);
+        const sortedOrders = response.data.orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+        setOrders(sortedOrders);
+        
       } catch (error) {
         console.error('حدث خطأ أثناء جلب الطلبات:', error);
       }
@@ -26,7 +66,7 @@ const OrderTracking = () => {
   const initialSteps = [
     { id: 1, text: 'New', icon: 'bi bi-check2', active: false },
     { id: 2, text: 'InProgress', icon: 'bi bi-person', active: false },
-    { id: 3, text: 'Ready', icon: 'bi bi-box2-fill', active: false },
+    { id: 3, text: 'Ready', icon: 'bi bi-check2', active: false },
   ];
 
   const updatedOrders = orders.map(singleOrder => {
@@ -52,9 +92,8 @@ const OrderTracking = () => {
 
     return { ...singleOrder, updatedSteps: steps };
   });
-  const handleChange = (e) => {
-   
-  };
+
+  
   
   return (
     <div className="container" style={{ paddingTop: '50px', marginLeft: '155px' }}>
@@ -123,8 +162,8 @@ const OrderTracking = () => {
                         <p style={{ marginLeft: '5px', marginTop: '9px' }}> Your order price is  {singleOrder.price} and it will be delivered {singleOrder.DeliveryDate} </p>
                       </div>
                       <div>
-                        <Button type="button" className="btn btn-outline-success" style={{ backgroundColor: 'white' , marginRight: '10px'}} onChange={handleChange} >Yes</Button>
-                        <Button type="button" className="btn btn-outline-danger" style={{ marginRight: '20px', backgroundColor: 'white' }}>No</Button>
+                      <Button type="button" className="btn btn-outline-success" style={{ backgroundColor: 'white' , marginRight: '10px'}} onClick={() => handleChange(singleOrder._id)} >Yes</Button>
+                        <Button type="button" className="btn btn-outline-danger" style={{ marginRight: '20px', backgroundColor: 'white' }}onClick={() => handleProcessorder(singleOrder._id)} >No</Button>
                       </div>
                     </div>
                   </div>

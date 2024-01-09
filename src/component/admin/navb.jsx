@@ -48,7 +48,7 @@ const Navbarr = () => {
           <img src={Image} alt="Your Logo" style={logoStyle} />
         </div>
         <ul className="nav">
-          <li className="nav-item">
+        <li className="nav-item" style={{ marginRight: '12px' }}>
             <button style={buttonStyle}>
               <span
                 className={`nav-link ${clickedLink === "/logout" ? 'clicked' : ''}`}
@@ -64,8 +64,15 @@ const Navbarr = () => {
 
       <div className="vertical-nav" style={verticalNavStyle}>
         <ul className="nav flex-column">
-          <li className="nav-item text-center mb-4 mt-3">
-            <img className="rounded-circle" width="90px" src={ima} alt="Profile" />
+          <li className="nav-item" style={{ alignItems: 'center', marginTop: '20px', marginLeft: "27px" }}>
+          <img
+  className="rounded-circle mt-3"
+  width="90px"
+  src={ima}
+  alt="Profile"
+  style={{ marginTop: '3px', borderRadius: '50%' }}
+/>
+
           </li>
           <li className="nav-item">
             <Link

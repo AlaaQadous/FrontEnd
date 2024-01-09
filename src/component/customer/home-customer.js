@@ -4,6 +4,7 @@ import { api } from "../../utiltis/apis";
 import { useSelector } from "react-redux";
 import Alert from "@mui/material/Alert";
 import swal from 'sweetalert';
+import { width } from '@mui/system';
 
 const SubmitOrderForm = () => {
   const materialOptions = ['Banners', 'Signs', 'Vehicle Graphics'];
@@ -11,7 +12,8 @@ const SubmitOrderForm = () => {
     myfile: null,
     description: '',
     material: 'Banners',
-    sizes: 1,
+    lengthValue: '', 
+    widthValue: '', 
   });
   const { token } = useSelector((state) => state.auth);
 
@@ -28,13 +30,17 @@ const SubmitOrderForm = () => {
   
 
   const handleSubmit = async () => {
-    const { myfile, description, material, sizes } = formData;
-    
+    const { myfile, description, material, lengthValue, widthValue } = formData;
+    if (!myfile || !description || !material || !lengthValue || !widthValue  ) {
+      setError("Please fill in all fields");
+      return;
+    }
     console.log('Submitted:', {
       myfile,
       description,
       material,
-      sizes,
+      lengthValue,
+      widthValue,
     });
     try {
       const formData1 = new FormData();
@@ -42,6 +48,9 @@ const SubmitOrderForm = () => {
       formData1.append("description",formData.description);
       formData1.append("material",formData.material);
       formData1.append("size",formData.sizes);
+      formData1.append("lengthValue",formData.lengthValue); 
+      formData1.append("widthValue", formData.widthValue);
+     console.log(formData1)
       const response = await api(token).post('/order/addOrder', formData1);
   
       if (response.status === 200) {
@@ -61,8 +70,8 @@ const SubmitOrderForm = () => {
 
   return (
     <div className="container" style={{ marginLeft: '200px' }}>
-      <div className="row">
-        <div className="col-md-6" style={{ paddingTop: '100px' }}>
+    <div className="row">
+        <div className="col-md-6" style={{ paddingTop: '50px' }}>
           <div className="card mx-auto">
             <div className="card-body">
               <h4 className="card-title" style={{ textAlign: 'center', marginBottom: '20px', color: 'rgb(229, 130, 178)' }}>Submit Order</h4>
@@ -75,9 +84,32 @@ const SubmitOrderForm = () => {
                 <div className="row">
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="form-group" className="form-label">Size</label>
-                  <input className="form-control" id="form-group" rows="3" value={formData.sizes} onChange={(e) => setFormData((prevData) => ({ ...prevData, sizes: e.target.value }))}></input>
-                </div>
+  <label htmlFor="lengthInput" className="form-label">Length</label>
+  <input 
+    type="number" 
+    className="form-control" 
+    id="lengthInput" 
+    value={formData.lengthValue} 
+    onChange={(e) => setFormData((prevData) => ({ ...prevData, lengthValue: e.target.value }))} 
+    min="1" 
+    max="10"
+  />
+</div>
+
+<div className="mb-3">
+  <label htmlFor="widthInput" className="form-label">Width</label>
+  <input 
+    type="number" 
+    className="form-control" 
+    id="widthInput" 
+    value={formData.widthValue} 
+    onChange={(e) => setFormData((prevData) => ({ ...prevData, widthValue: e.target.value }))} 
+    min="1" 
+    max="10"
+  />
+</div>
+
+
                 <div className="mb-3">
                   <label htmlFor="exampleFormControlTextarea1" className="form-label">Description</label>
                   <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" value={formData.description} onChange={(e) => setFormData((prevData) => ({ ...prevData, description: e.target.value }))}></textarea>
