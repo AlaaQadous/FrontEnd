@@ -8,17 +8,11 @@ import { logOut } from '../../features/authSlice';
 import { useNavigate } from 'react-router-dom';
 import {  useSelector } from "react-redux";
 import { api } from "../../utiltis/apis";
-const logoStyle = { width: '120px', height: '100px', paddingLeft: '20px' };
-const linkStyle = { color: 'black' };
-const buttonStyle = { backgroundColor: 'white', border: 'none' };
-const verticalNavStyle = {
-  padding: '20px',
-  borderRight: '3px solid #cac8c8',
-  paddingRight: '10px',
-  width: '200px',
-  height: '100vh',
-  position: 'fixed',
-};
+import {Stack } from '@mui/material';
+
+const logoStyle = { width: '120px', height: '100px', paddingLeft: '20px', paddingRight:'5px' };
+const buttonStyle = {  border: 'none' };
+
 const Navbar = () => {
   const dispatch = useDispatch();
   const [clickedLink, setClickedLink] = useState(null);
@@ -47,70 +41,60 @@ const Navbar = () => {
     }, [token]);
   return (
     <div>
-      <nav className="d-flex justify-content-between" >
+      <nav className="d-flex justify-content-between"  style={  {background:'#f5f5f5'}
+}>
+ 
         <div>
           <img src={Image} alt="Your Logo" style={logoStyle} />
         </div>
-        <ul className="nav">
-          <li className="nav-item">
-            <button style={buttonStyle}>
-              <span
-                className={`nav-link ${clickedLink === "/logout" ? 'clicked' : ''}`}
-                style={{ ...linkStyle, textDecoration: 'none', color: 'black',fontSize: '20px' }}
-                onClick={() => handleLinkClick()}
-              >
-                Logout
-              </span>
-            </button>
-          </li>
-        </ul>
+        <Stack direction='row'>
+  <ul className="nav" style={{ listStyleType: 'none', padding: '0' }}>
+    <li className="nav-item">
+      <Link
+        to="/customer"
+        className={`nav-link ${clickedLink === "/" ? 'clicked' : ''}`}
+        style={{  listStyleType: 'none',color: 'black',fontSize: '20px' }}
+      >
+        <span style={{ paddingTop: '7px' }}>Dashboard</span>
+      </Link>
+    </li>
+    <li className="nav-item">
+      <Link
+        to="/orders"
+        className={`nav-link ${clickedLink === "/orders" ? 'clicked' : ''}`}
+        style={{ color: 'black' ,fontSize: '20px'}}
+      >
+        <span >Orders</span>
+      </Link>
+    </li>
+    <li className="nav-item">
+      <Link
+        to="/profile"
+        className={`nav-link ${clickedLink === "/profile" ? 'clicked' : ''}`}
+        style={{ textDecoration: 'none', color: 'black',fontSize: '20px' }}
+      >
+        <span >Profile</span>
+      </Link>
+    </li>
+  </ul>
+  <ul className="nav" style={{ listStyleType: 'none', padding: '0' }}>
+    <li className="nav-item">
+      <button style={buttonStyle}>
+        <span
+          className={`nav-link ${clickedLink === "/logout" ? 'clicked' : ''}`}
+          style={{  textDecoration: 'none', color: 'black',fontSize: '20px' }}
+          onClick={() => handleLinkClick()}
+        >
+          Logout
+        </span>
+      </button>
+    </li>
+  </ul>
+</Stack>
+
       </nav>
 
-      <div className="virtical-nav" style={verticalNavStyle}>
-        <ul className="nav flex-column">
-        <li className="nav-item" style={{ alignItems: 'center', marginTop: '20px', marginLeft: "27px" }}>
-          <img
-  className="rounded-circle mt-3"
-  width="90px"
-  src={ima}
-  alt="Profile"
-  style={{ marginTop: '3px', borderRadius: '50%' }}
-/>
-
-          </li>
-          <li className="nav-item">
-            <Link
-              to="/customer"
-              className={`nav-link ${clickedLink === "/" ? 'clicked' : ''}`}
-              style={{ ...linkStyle, color: 'black',fontSize: '20px' }}
-            
-            >
-              <span style={{ paddingTop: '7px' }}>Dashboard</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              to="/orders"
-              className={`nav-link ${clickedLink === "/orders" ? 'clicked' : ''}`}
-              style={{ ...linkStyle, color: 'black' ,fontSize: '20px'}}
     
-            >
-              <span style={{ paddingTop: '3px' }}>Orders</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              to="/profile"
-              className={`nav-link ${clickedLink === "/profile" ? 'clicked' : ''}`}
-              style={{ ...linkStyle, color: 'black',fontSize: '20px' }}
-             
-            >
-              <span style={{ paddingTop: '3px' }}>Profile</span>
-            </Link>
-          </li>
-
-        </ul>
-      </div>
     </div>
   );
 };

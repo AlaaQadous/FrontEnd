@@ -8,7 +8,7 @@ const App = () => {
   return (
   <>
       <Navbar />
-      <div style={{ marginLeft: '150px', padding: '20px' }}>
+      <div style={{ marginLeft: '150px', padding: '10px' }}>
          
         
       </div>

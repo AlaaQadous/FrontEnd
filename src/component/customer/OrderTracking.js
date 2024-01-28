@@ -96,7 +96,7 @@ const OrderTracking = () => {
   
   
   return (
-    <div className="container" style={{ paddingTop: '50px', marginLeft: '155px' }}>
+    <div className="container" style={{ paddingTop: '55px', marginLeft: '75px' }}>
       {updatedOrders.map((singleOrder, index) => (
         <article key={index} className="card" style={{ marginBottom: '40px' }}>
           <header className="card-header"> My Orders / Tracking </header>
@@ -135,7 +135,7 @@ const OrderTracking = () => {
                 <figure className="itemside mb-3">
                   <div className="aside">
                     {singleOrder.image && (
-                      <img src={singleOrder.image} className="img-sm border" alt="Product" style={{width:"150px" , height:"130px"}} />
+                      <img src={singleOrder.image} className="img-sm border" alt="Product" style={{width:"150px" , height:"150px"}} />
                     )}
                   </div>
                   <figcaption className="info align-self-center">

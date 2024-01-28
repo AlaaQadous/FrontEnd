@@ -19,7 +19,7 @@ const fontCursive = { fontFamily: 'Pacifico, cursive' };
 
   return (
     <>
-    <nav className="d-flex justify-content-between">
+    <nav className="d-flex justify-content-between" style={{  background:'#f5f5f5'}}>
       <div>
         <img src={Image} alt="Your Logo" style={logoStyle} />
       </div>

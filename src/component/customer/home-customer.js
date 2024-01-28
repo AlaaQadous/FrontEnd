@@ -71,7 +71,7 @@ const SubmitOrderForm = () => {
   return (
     <div className="container" style={{ marginLeft: '200px' }}>
     <div className="row">
-        <div className="col-md-6" style={{ paddingTop: '50px' }}>
+        <div className="col-md-6" style={{ paddingTop: '60px' }}>
           <div className="card mx-auto">
             <div className="card-body">
               <h4 className="card-title" style={{ textAlign: 'center', marginBottom: '20px', color: 'rgb(229, 130, 178)' }}>Submit Order</h4>

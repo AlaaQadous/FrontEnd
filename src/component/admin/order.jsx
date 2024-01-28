@@ -65,11 +65,12 @@ const Order = () => {
     }
   };
   return (
-    <Container className="rounded mt-5 p-md-5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', marginLeft: '200px', padding: '20px' }}>
+    <Container className="rounded mt-5 p-md-5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', marginLeft: '150px', padding: '20px' }}>
       <Typography variant="h2" className="font-weight-bold" style={{ marginTop: '15px', marginBottom: '10px' }}>Order Manage</Typography>
       <TableContainer component={Paper} className="table-responsive">
         <Table>
-          <TableHead>
+          <TableHead  style={{background: 'rgb(243,171,203)',
+background:' radial-gradient(circle, rgba(243,171,203,1) 25%, rgba(215,251,252,1) 93%)'}}>
             <TableRow>
               <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>Image</TableCell>
               <TableCell style={{ fontWeight: 'bold', textAlign: 'center' }}>Order Date</TableCell>
@@ -91,7 +92,7 @@ const Order = () => {
       <TableCell style={{ textAlign: 'center' }}>
         <Typography className="pl-lg-5 pl-md-3 pl-1 name">{order.date}</Typography>
       </TableCell>
-      <TableCell style={{ textAlign: 'center' }}>{order.description}</TableCell>
+      <TableCell style={{ textAlign: 'center',height:'10px',width:'40%' }}>{order.description}</TableCell>
       <TableCell style={{ textAlign: 'center' }}>{order.lengthValue}</TableCell>
       <TableCell style={{ textAlign: 'center' }}>{order.widthValue}</TableCell>
       <TableCell style={{ textAlign: 'center' }}>{order.material}</TableCell>

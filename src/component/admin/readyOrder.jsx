@@ -22,34 +22,35 @@ const ReadyOrder = () => {
       fetchOrders();
     }, [token]); 
     return (
-        <Container className="rounded mt-5 p-md-5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',marginLeft: '200px', padding: '20px'  }}>
+        <Container className="rounded mt-5 p-md-5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',marginLeft: '150px', padding: '20px'  }}>
             <Typography variant="h2" className="font-weight-bold" style={{ marginTop: '15px', marginBottom: '15px' }}>Ready Orders</Typography>
             <TableContainer component={Paper} className="table-responsive">
                 <Table>
-                    <TableHead>
+                    <TableHead  style={{background: 'rgb(243,171,203)',
+background:' radial-gradient(circle, rgba(243,171,203,1) 25%, rgba(215,251,252,1) 93%)'}}>
                     <TableRow>
-  <TableCell style={{ fontWeight: 'bold' }}>Image</TableCell>
-  <TableCell style={{ fontWeight: 'bold' }}>Order Date</TableCell>
-  <TableCell style={{ fontWeight: 'bold' }}>Description</TableCell>
-  <TableCell style={{ fontWeight: 'bold' }}>Employee Name</TableCell>
-  <TableCell style={{ fontWeight: 'bold' }}>Delivary Date</TableCell>
-  <TableCell style={{ fontWeight: 'bold' }}>Price</TableCell>
+  <TableCell style={{ fontWeight: 'bold',padding: '8px', textAlign: 'center' }}>Image</TableCell>
+  <TableCell style={{ fontWeight: 'bold' ,padding: '8px', textAlign: 'center'}}>Order Date</TableCell>
+  <TableCell style={{ fontWeight: 'bold' ,padding: '8px', textAlign: 'center'}}>Description</TableCell>
+  <TableCell style={{ fontWeight: 'bold',padding: '8px', textAlign: 'center' }}>Employee Name</TableCell>
+  <TableCell style={{ fontWeight: 'bold',padding: '8px', textAlign: 'center' }}>Delivary Date</TableCell>
+  <TableCell style={{ fontWeight: 'bold',padding: '8px', textAlign: 'center' }}>Price</TableCell>
 </TableRow>
 
                     </TableHead>
                     <TableBody>
                     {Array.isArray(orders.doc) && orders.doc.map((order) => (
                             <TableRow key={order.id} className="bg-blue">
-                                <TableCell>
+                                <TableCell style={{ textAlign: 'center' }}>
                                     <Avatar src={order.image} alt="" style={{ borderRadius: '0'  , width:'100px', height:'100px'}} />
                                 </TableCell>
-                                <TableCell>
+                                <TableCell style={{ textAlign: 'center' }}>
                                     <Typography className="pl-lg-5 pl-md-3 pl-1 name">{order.date}</Typography>
                                 </TableCell>
-                                <TableCell>{order.description}</TableCell>
-                                <TableCell>{order.employeeName}</TableCell>
-                                <TableCell>{order.DeliveryDate}</TableCell>
-                                <TableCell>{order.price}</TableCell>
+                                <TableCell style={{ textAlign: 'center',height:'10px',width:'40%' }}>{order.description}</TableCell>
+                                <TableCell style={{ textAlign: 'center'}}>{order.employeeName}</TableCell>
+                                <TableCell style={{ textAlign: 'center' }}>{order.DeliveryDate}</TableCell>
+                                <TableCell style={{ textAlign: 'center' }}>{order.price}</TableCell>
 
 
                             </TableRow>

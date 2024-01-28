@@ -79,7 +79,7 @@ export default function SignUpSide() {
   };
 
   return (
-    <Container component="main" maxWidth="false">
+    <Container component="main" maxWidth="false" style={{padding:'45px'}}>
       <Box
         sx={{
           minHeight: "100vh",
@@ -164,16 +164,21 @@ export default function SignUpSide() {
                   autoComplete="current-password"
                   onChange={handleChange}
                 />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="myfile"
-                  name="myfile"
-                  type="file"
-                  inputProps={{ accept: 'myfile/*' }}
-                  onChange={handleChange}
-                />
+<TextField
+  margin="normal"
+  required
+  fullWidth
+  id="myfile"
+  name="myfile"
+  type="file"
+  inputProps={{ accept: 'myfile/*' }}
+  InputLabelProps={{
+    shrink: true,
+    children: 'Select an Image',
+  }}
+  onChange={handleChange}
+  label="Select image"
+/>
                 <Button
                   type="submit"
                   variant="contained"
@@ -188,13 +193,14 @@ export default function SignUpSide() {
                     textDecoration: 'none',
                     '&:hover': {
                       backgroundColor: '#1976D2',
-                    }
+                    },
+                    marginTop:"15px"
                   }}
                 >
                   Sign In
                 </Button>
 
-                <Grid container>
+                <Grid container style={{marginTop:"15px"}}>
                   <Grid item>
                     <MuiLink href="/login" variant="body2">
                       {"I have an account? Sign In"}

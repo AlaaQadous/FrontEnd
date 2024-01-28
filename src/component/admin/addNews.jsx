@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Card, CardContent, CardMedia, Button, Grid, TextField, IconButton } from '@mui/material';
+import { Container, Typography, Card, CardContent, CardMedia, Button, Grid, TextField, IconButton,Avatar } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { api } from '../../utiltis/apis';
 import { useSelector } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close';
 import swal from 'sweetalert';
-
+import Clear from '@mui/icons-material/Clear';
+import DoneIcon from '@mui/icons-material/Done';
+import './add.css';
 const AddNews = () => {
   const { token } = useSelector((state) => state.auth);
 
@@ -36,6 +38,7 @@ const AddNews = () => {
     e.preventDefault();
     setAdd(true);
   };
+  const [overlayVisible, setOverlayVisible] = useState(false);
 
   const [formData1, setFormData1] = useState({
     myfile: null,
@@ -164,7 +167,7 @@ const AddNews = () => {
         flexDirection: 'column',
         alignItems: 'flex-start',
         position: 'relative',
-        marginLeft: '200px',
+        marginLeft: '150px',
         padding: '20px',
 
       }}
@@ -185,6 +188,8 @@ const AddNews = () => {
       >
         Add News
       </Button>
+      {overlayVisible && <div className="overlay" />}
+
       <Grid container spacing={3}>
         {Array.isArray(cardsData.doc) &&
           cardsData.doc.map((card) => (
@@ -207,13 +212,16 @@ const AddNews = () => {
                     style={{
                       marginTop: '20px',
                       marginLeft: '20px',
-                      backgroundColor: card.visible ? 'green' : 'red',
                       color: 'white',
                       borderRadius: '50%',
                     }}
                     onClick={() => handleToggleClick(card._id)}
                   >
-                    {card.visible ? '✓' : '✗'}
+                    {card.visible ? <Avatar style={{backgroundColor: 'green' }}>
+  <DoneIcon />
+</Avatar>:<Avatar style={{ backgroundColor: "rgba(255, 0, 0, 0.7)" }} >
+        <Clear />
+      </Avatar> }
                   </IconButton>
 
 
@@ -223,6 +231,7 @@ const AddNews = () => {
           ))}
       </Grid>
       {add && (
+      <div className="overlay">
         <Grid
           container
           spacing={2}
@@ -284,8 +293,10 @@ const AddNews = () => {
             </Card>
           </Grid>
         </Grid>
+        </div>
       )}
-      {edit && (
+     {edit && (
+      <div className="overlay">
         <Grid
           container
           spacing={2}
@@ -346,8 +357,9 @@ const AddNews = () => {
               </CardContent>
             </Card>
           </Grid>
-        </Grid>
-      )}
+          </Grid>
+      </div>
+    )}
     </Container>
   );
 };

@@ -82,23 +82,23 @@ const OrderList = () => {
         {Array.isArray(Order.doc) &&
           Order.doc.map((order) => (
             <Grid item key={order._id} xs={12} sm={6} md={4}>
-              <Card>
-                <img src={order.image} alt={`Order ${order.material}`} width="100%" height="260" />
+              <Card sx={{ maxWidth: '400px' }}>
+                <img src={order.image} alt={`Order ${order.material}`} width="80%" height="260" style={{ display: 'block', margin: 'auto' }}
+/>
                 <CardContent>
                   <Typography variant="h4" component="div">
                     {order.material}
                     <Typography
-  sx={{
-    color: '#7db921',
-    fontSize: '30px',
-    textTransform: 'uppercase',
-    float: 'right',
-    marginTop: '3px',
-  }}
->
-  {order.lengthValue} &times; {order.widthValue}
-</Typography>
-
+                      sx={{
+                        color: '#7db921',
+                        fontSize: '30px',
+                        textTransform: 'uppercase',
+                        float: 'right',
+                        marginTop: '3px',
+                      }}
+                    >
+                      {order.lengthValue} &times; {order.widthValue}
+                    </Typography>
                   </Typography>
                   <div style={{ marginTop: '10px', marginBottom: '20px', textAlign: 'justify', textJustify: 'inter-word' }}>
                     <p
@@ -125,70 +125,83 @@ const OrderList = () => {
       </Grid>
 
       {add && (
-        <Grid container spacing={2} style={{ position: 'absolute', top: '50%', left: '55%', transform: 'translate(-50%, -50%)', width: '100%' }}>
-          <Grid item xs={12} md={6} style={{ maxWidth: 600, margin: 'auto' }}>
-            <Card sx={{ margin: 'auto' }}>
-              <CardContent>
-                <div style={{ textAlign: 'right'}}>
-                  <Button onClick={handleClose} style={{ color: 'rgb(229, 130, 178)' }}>
-                    <CloseIcon />
-                  </Button>
-                </div>
-                <Typography variant="h4" style={{ textAlign: 'center', marginBottom: '20px', color: 'rgb(229, 130, 178)' }}>
-                  Add Details
-                </Typography>
-                <form className="forms-sample" onSubmit={onAdd}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="price"
-                    label="Price"
-                    name="price"
-                    autoComplete="price"
-                    value={formData.price} 
-                    autoFocus
-                    onChange={handleChange}
-                  />
-
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="DeliveryDate"
-                    label="DeliveryDate"
-                    type="date"
-                    value={formData.DeliveryDate}
-                    id="DeliveryDate"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    onChange={handleChange}
-                  />
-
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="comment"
-                    label="Comment"
-                    name="comment"
-                    autoComplete="comment"
-                    autoFocus
-                    value={formData.comment}
-                    onChange={handleChange}
-                  />
-
-                  <div style={{ textAlign: 'center' }}>
-                    <Button type="submit" variant="contained" style={{ backgroundColor: 'rgb(229, 130, 178)', color: 'white' }}>
-                      Add
+        <>
+          <div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              zIndex: 1000,
+            }}
+          ></div>
+          <Grid container spacing={2} style={{ position: 'absolute', top: '50%', left: '55%', transform: 'translate(-50%, -50%)', width: '100%', zIndex: 1000 }}>
+            <Grid item xs={12} md={6} style={{ maxWidth: 600, margin: 'auto' }}>
+              <Card sx={{ margin: 'auto' }}>
+                <CardContent>
+                  <div style={{ textAlign: 'right'}}>
+                    <Button onClick={handleClose} style={{ color: 'rgb(229, 130, 178)' }}>
+                      <CloseIcon />
                     </Button>
                   </div>
-                </form>
-              </CardContent>
-            </Card>
+                  <Typography variant="h4" style={{ textAlign: 'center', marginBottom: '20px', color: 'rgb(229, 130, 178)' }}>
+                    Add Details
+                  </Typography>
+                  <form className="forms-sample" onSubmit={onAdd}>
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="price"
+                      label="Price"
+                      name="price"
+                      autoComplete="price"
+                      value={formData.price} 
+                      autoFocus
+                      onChange={handleChange}
+                    />
+
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="DeliveryDate"
+                      label="DeliveryDate"
+                      type="date"
+                      value={formData.DeliveryDate}
+                      id="DeliveryDate"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      onChange={handleChange}
+                    />
+
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="comment"
+                      label="Comment"
+                      name="comment"
+                      autoComplete="comment"
+                      autoFocus
+                      value={formData.comment}
+                      onChange={handleChange}
+                    />
+
+                    <div style={{ textAlign: 'center' }}>
+                      <Button type="submit" variant="contained" style={{ backgroundColor: 'rgb(229, 130, 178)', color: 'white' }}>
+                        Add
+                      </Button>
+                    </div>
+                  </form>
+                </CardContent>
+              </Card>
+            </Grid>
           </Grid>
-        </Grid>
+        </>
       )}
     </Container>
   );

@@ -1,30 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Image from './image/l.png';
-import Image1 from './image/alaa.jpg';
 import './navb.css';
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from '../../features/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { api } from "../../utiltis/apis";
+import {Stack } from '@mui/material';
+import { FaAngleDown } from 'react-icons/fa';
 
 const logoStyle = { width: '120px', height: '100px', paddingLeft: '20px' };
-const verticalNavStyle = {
-  padding: '20px',
-  borderRight: '3px solid #cac8c8',
-  paddingRight: '10px',
-  width: '200px',
-  height: '100vh',
-  position: 'fixed',
-};
-
 const commonLinkStyle = {
   textDecoration: 'none',
   color: 'black',
-  fontSize: '20px', // يمكنك تعديل القيمة حسب احتياجاتك
+  fontSize: '20px', 
 };
 
 const Navbar = () => {
+
+  const [isOrderVisible, setIsOrderVisible] = useState(false);
+
+  const handleOrderClick = () => {
+    setIsOrderVisible(!isOrderVisible);
+  };
+
   const [clickedLink, setClickedLink] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,55 +55,40 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <nav style={{ display: 'flex', justifyContent: 'space-between',background:'#f5f5f5' }}>
         <div>
           <img src={Image} alt="Your Logo" style={logoStyle} />
         </div>
-        <ul className="nav" style={{ listStyleType: 'none', padding: '0' }}>
-          <li className="nav-item" style={{ marginTop: '10px', marginRight: '12px' }}>
-            <Link
-              className={`nav-link ${clickedLink === "/logout" ? 'clicked' : ''}`}
-              style={{ ...commonLinkStyle, textDecoration: 'none' }}
-              onClick={() => handleLinkClick()}
-            >
-              <span style={{ paddingTop: '7px' }}>Logout</span>
-            </Link>
-          </li>
-         
-        </ul>
-      </nav>
-
-      <div className="virtical-nav" style={verticalNavStyle}>
-        <ul className="nav flex-row" style={{ listStyleType: 'none', padding: '0' }}>
-          <li className="nav-item" style={{ alignItems: 'center', marginTop: '20px', marginLeft: "27px" }}>
-          <img
-  className="rounded-circle mt-3"
-  width="90px"
-  src={ima}
-  alt="Profile"
-  style={{ marginTop: '3px', borderRadius: '50%' }}
-/>
-
-          </li>
-          <li className="nav-item" style={{ marginTop: '30px' }}>
-            <Link
-              to="/employee"
-              className={`nav-link ${clickedLink === "/" ? 'clicked' : ''}`}
-              style={{ ...commonLinkStyle }}
-            >
+        <Stack direction='row'>
+       
+       <ul className="nav flex-row" style={{ listStyleType: 'none', padding: '0' }}>
+      
+        <span
+  onClick={handleOrderClick}
+  style={{ cursor: 'pointer', fontSize: '20px', position: 'relative' ,marginRight: '10px', marginTop:'7px'
+}}
+>
+  Order <FaAngleDown />
+  {isOrderVisible && (
+    <ul style={{ position: 'absolute', top: '100%', left: 0,  background:'#f5f5f5',padding: '10px' , width:'120px' }}>
+      <Stack gap={2}>
+     
+          <li className="nav-item" style={{ listStyle: 'none',width:'100px' }}>
+          <Link to="/employee" style={{ color: 'black', fontSize: '15px', textDecoration: 'none',  }}>
               <span style={{ paddingTop: '7px' }}>New Orders</span>
             </Link>
           </li>
-          <li className="nav-item" style={{ marginTop: '2px' }}>
-            <Link
-              to="/order"
-              className={`nav-link ${clickedLink === "/order" ? 'clicked' : ''}`}
-              style={{ ...commonLinkStyle }}
-            >
-              <span style={{ paddingTop: '7px' }}>Orders</span>
+               <li className="nav-item" style={{ listStyle: 'none',width:'100px' }}>
+          <Link to="/order" style={{ color: 'black', fontSize: '15px', textDecoration: 'none',  }}>
+              <span style={{ paddingTop: '7px' }}> All Orders</span>
             </Link>
           </li>
-          <li className="nav-item" style={{ marginTop: '2px' }}>
+      </Stack>
+    </ul>
+  )}
+</span>
+         
+          <li className="nav-item" >
             <Link
               to="/account"
               className={`nav-link ${clickedLink === "/account" ? 'clicked' : ''}`}
@@ -113,8 +97,22 @@ const Navbar = () => {
               <span style={{ paddingTop: '7px' }}>Profile</span>
             </Link>
           </li>
+
+          <li className="nav-item" style={{  marginRight: '12px' }}>
+            <Link
+              className={`nav-link ${clickedLink === "/logout" ? 'clicked' : ''}`}
+              style={{ ...commonLinkStyle, textDecoration: 'none' }}
+              onClick={() => handleLinkClick()}
+            >
+              <span style={{ paddingTop: '7px' }}>Logout</span>
+            </Link>
+          </li>
         </ul>
-      </div>
+        </Stack>
+       
+      </nav>
+
+     
     </div>
   );
 };

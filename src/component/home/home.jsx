@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './home.css';
-import Image1 from '../image/as.png';
-import { Container, Typography, Grid, Box, Paper } from '@mui/material';
+import Image1 from '../image/alaaaa.jpg';
+import { Container, Typography, Grid, Box, Paper ,Stack } from '@mui/material';
 
 const Home = () => {
 
@@ -34,16 +34,24 @@ const Home = () => {
   return (
     <>
     
-      <section className="bgimage" id="home">
-        
-        <img src={Image1} alt="Your Image" style={{ opacity: 0.75 }} />
-        <div className="text-overlay fadeIn">
-          <h1>We print it...</h1>
-          <h2><span>We sign it...</span></h2>
-          <p>
+      <section  id="home">
+       
+        <Stack spacing={3} style={{padding:"70px", marginTop:"140px"}}>
+          <Stack direction='row' gap={3} sx={{justifyContent:"center", alignItems:"center"}}>
+          <p style={{ fontSize:"25px", marginLeft:"15px", textAlign: 'justify'
+}}>
+          <h1>We print it...</h1> 
+          <h2 style={{textAlign:"center"}} ><span>We sign it...</span></h2>
+<br>
+</br>
             Working with cutting-edge printing technology, we can ensure that every project is produced to the highest quality, on time and within budget, making us one of the leading large format digital printing companies and specialists in signage in Palestine.
           </p>
-        </div>
+          <img src={Image1} alt="Your Image"  style={{width:'50%' , height:'50%',border: 'none',  
+
+
+}} />
+          </Stack>
+        </Stack>
       </section>
 
       <section className={`transition-container ${isVisible ? 'visible' : ''}`}>
@@ -129,7 +137,7 @@ const Home = () => {
         <Container style={{ marginTop: '160px' }}>
   <Paper elevation={0} square>
     <Typography variant="h2" align="center" sx={{ mb: 4 }} style={font}>
-      Some of our works
+      Our works
     </Typography>
   </Paper>
 
@@ -140,7 +148,7 @@ const Home = () => {
           <div className="image-container">
             <img src={work.image} alt="Card Image" />
             <div className="card-content">
-              <p>{work.description}</p>
+              <p >{work.description}</p>
               <h2>{work.title}</h2>
             </div>
           </div>

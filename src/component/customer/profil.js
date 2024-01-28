@@ -92,7 +92,7 @@ const ProfileSettings = () => {
       }
     }, [token]);
   return (
-    <Container component="div" maxWidth="lg" className="rounded bg-white mt-5 mb-5" style={{ marginLeft: '300px' }}>
+    <Container component="div" maxWidth="lg" className="rounded bg-white mt-5 mb-5" style={{ marginLeft: '250px' }}>
       <Grid container style={{ paddingTop: '60px' }}>
         <Grid item xs={12} md={3} className="border-right">
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" p={3} py={5}>
