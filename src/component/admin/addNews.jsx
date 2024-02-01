@@ -125,8 +125,7 @@ const AddNews = () => {
           title: 'Updated successfully',
           icon: 'success',
         });
-        window.location.reload(); 
-        setEdit(false); // Close the edit form after successful update
+        setEdit(false); 
       } else {
         console.log('Failed to edit');
       }

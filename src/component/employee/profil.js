@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import swal from 'sweetalert';
 
 const ProfileSettings = () => {
+  const { token } = useSelector((state) => state.auth);
 
   const [profile, setProfile] = useState({
     username: '',
@@ -13,7 +14,6 @@ const ProfileSettings = () => {
     password: '',
     myfile: '',
   });
-  const { token } = useSelector((state) => state.auth);
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;

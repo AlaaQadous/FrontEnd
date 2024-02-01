@@ -3,70 +3,75 @@ import { Container, Grid, Box, TextField, Button, Typography } from '@mui/materi
 import { api } from "../../utiltis/apis";
 import { useSelector } from "react-redux";
 import swal from 'sweetalert';
+import Alert from "@mui/material/Alert";
+
 const ProfileSettings = () => {
+  const [error, setError] = useState('');
 
   const [profile, setProfile] = useState({
-    username: '',
     email: '',
     password: '',
     myfile: '',
+    userName: '',
+  });
+
+  const [ima, setImage] = useState({
+    myfile: '',
+    email: '',
+    userName: '',
+    password:'',
   });
   const { token } = useSelector((state) => state.auth);
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
+  
+    setImage((prevIma) => ({
+      ...prevIma,
+      [name]: name === 'myfile' ? files[0] : value,
+    }));
+  
     setProfile((prevProfile) => ({
       ...prevProfile,
       [name]: name === 'myfile' ? files[0] : value,
     }));
   };
-
-
+  
+  
+  
+  
+  console.log("prof",profile)
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const formData = new FormData();
-    formData.append("email", profile.email);
-    formData.append("password", profile.password);
-    formData.append("userame", profile.userame);
-    formData.append("myfile", profile.myfile);
-
-    if (!profile.email || !profile.password || !profile.username || !profile.myfile) {
-      console.log("Please fill in all fields");
+  
+    console.log("pro",profile)
+  
+    if (!profile.email || !profile.password || !profile.userName || !profile.myfile) {
+      setError("Please fill in all fields");
       return;
     }
-
-    // Password validation
     if (profile.password.length < 6 || !/\d/.test(profile.password) || !/[a-zA-Z]/.test(profile.password)) {
-      console.log("Password must be at least 6 characters long and contain both letters and numbers");
+      setError("Password must be at least 6 characters long and contain both letters and numbers");
       return;
     }
-
-    console.log({
-      username: profile.username,
-      email: profile.email,
-      password: profile.password,
-      myfile: profile.myfile
-    });
     const formData1 = new FormData();
-    formData1.append("username", profile.username)
+    formData1.append("userName", profile.userName)
     formData1.append("password", profile.password)
     formData1.append("email", profile.email)
     formData1.append("myfile", profile.myfile)
     try {
       const response = await api(token).put("/users/profile", formData1);
       console.log(response);
-
       if (response.status === 200) {
         swal({
           title: "Successfully updated",
           icon: "success"
         });
       } else {
-        console.log("Update failed");
+        setError("Update failed");
       }
     } catch (error) {
-      console.log('Error:', error.message);
+      setError('Error:', error.message);
     }
 
   };
@@ -75,28 +80,39 @@ const ProfileSettings = () => {
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
-  const [ima , setImage]=useState();
+
+  console.log("usersdata", "email",ima.email ,"image",ima.myfile ,"name", ima.userName)
   useEffect(() => {
-      const fetchOrders = async () => {
-        try {
-          const response = await api(token).get("/users/image");
-          console.log(response.data);
-          setImage(response.data.user.doc[0].image);
-        } catch (error) {
-          console.error('حدث خطأ أثناء جلب الطلبات:', error);
-        }
-      };
-    
-      if (token) {
-        fetchOrders();
+    const fetchOrders = async () => {
+      try {
+        const response = await api(token).get("/users/image");
+        const { user } = response.data;
+        setImage({
+          myfile: user.doc[0].image || '', 
+          email: user.doc[0].email,
+          userName: user.doc[0].userName,
+        });
+
+        setProfile({
+          myfile: user.doc[0].image || '', 
+          email: user.doc[0].email,
+          userName: user.doc[0].userName,
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
-    }, [token]);
+    };
+  
+    if (token) {
+      fetchOrders();
+    }
+  }, [token]);
   return (
     <Container component="div" maxWidth="lg" className="rounded bg-white mt-5 mb-5" style={{ marginLeft: '250px' }}>
       <Grid container style={{ paddingTop: '60px' }}>
         <Grid item xs={12} md={3} className="border-right">
           <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" p={3} py={5}>
-            <img className="rounded-circle mt-5" src={ima} width="150px" alt="Profile" />
+            <img className="rounded-circle mt-5" src={ima.myfile} width="150px" alt="Profile" />
             <div className="mb-3">
               <label htmlFor="formFile" className="btn mt-2" style={{ backgroundColor: 'rgb(229, 130, 178)', color: 'white' }} onClick={handleButtonClick}>
                 Upload Profile Picture
@@ -123,49 +139,52 @@ const ProfileSettings = () => {
               <Typography variant="h4" style={{ textAlign: 'center', marginBottom: '20px' }}>Profile Settings</Typography>
             </Box>
             <Grid container spacing={2}>
-              <Grid item xs={12} md={12}>
-                <TextField
-                  fullWidth
-                  label="User Name"
-                  variant="outlined"
-                  name="username"
-                  onChange={handleInputChange}
-                  style={{ marginBottom: '20px' }}
-                />
+            <Grid item xs={12} md={12}>
+  <TextField
+    fullWidth
+    label="User Name"
+    variant="outlined"
+    name="userName"
+    value={ima.userName}
+    onChange={handleInputChange} // Use handleInputChange for both values and onChange events
+    style={{ marginBottom: '20px' }}
+  />
+</Grid>
+<Grid item xs={12} md={12}>
+  <TextField
+    fullWidth
+    label="Email"
+    variant="outlined"
+    placeholder={"Email"}
+    name="email"
+    value={ima.email}
+    onChange={handleInputChange} // Use handleInputChange for both values and onChange events
+    style={{ marginBottom: '20px' }}
+  />
+</Grid>
 
-              </Grid>
-              <Grid item xs={12} md={12}>
-
-                <TextField
-                  fullWidth
-                  label="Email"
-                  variant="outlined"
-                  placeholder="Email"
-                  name="email"
-                  onChange={handleInputChange}
-                  style={{ marginBottom: '20px' }}
-                />
-              </Grid>
-              <Grid item xs={12} md={12}>
-                <TextField
-                  fullWidth
-                  label=" New Password"
-                  variant="outlined"
-                  placeholder="Password"
-                  name="password"
-                  onChange={handleInputChange}
-                  type="password"
-                  style={{ marginBottom: '20px' }}
-                />
-              </Grid>
+            <Grid item xs={12} md={12}>
+              <TextField
+                fullWidth
+                label="New Password"
+                variant="outlined"
+                placeholder="Password"
+                name="password"
+                value={profile.password}  
+                onChange={handleInputChange}
+                type="password"
+                style={{ marginBottom: '20px' }}
+              />
             </Grid>
-            <Box mt={5} textAlign="center">
-              <Button variant="contained" style={{ backgroundColor: 'rgb(229, 130, 178)', color: 'white' }} onClick={handleSubmit}>
-                Save Profile
-              </Button>
-            </Box>
+          </Grid>
+          <Box mt={5} textAlign="center">
+            <Button variant="contained" style={{ backgroundColor: 'rgb(229, 130, 178)', color: 'white' }} onClick={handleSubmit}>
+              Save Profile
+            </Button>
           </Box>
-        </Grid>
+          {error && <Alert severity="warning" sx={{ marginTop: "10px" }}>{error}</Alert>}
+        </Box>
+      </Grid>
       </Grid>
     </Container>
   );
